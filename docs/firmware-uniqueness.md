@@ -72,7 +72,7 @@ assign vsec_timestamp_reg = BUILD_TIMESTAMP[31:0];
 | Test Category | Tool/Method | Expected Behavior | Failure Indicators |
 |---------------|-------------|-------------------|-------------------|
 | **Basic Enumeration** | [`lspci -vvv`](https://linux.die.net/man/8/lspci), [`pcieutils`](https://github.com/billfarrow/pcieutils) | Identical vendor/device IDs, capability offsets | Mismatched PCI IDs, capability gaps |
-| **Driver Loading** | Windows Device Manager, Linux modprobe | Native vendor driver loads without warnings | Code 10 errors, unsigned driver prompts |
+| **Driver Loading** | Linux modprobe | Native vendor driver loads without warnings | Kernel module / VFIO binding issues |
 | **Stress Testing** | MSI flood tests, hot-reset cycles | Stable operation under load | System hangs, IRQ storms |
 | **Security Scanning** | Anti-tamper suites (Falcon, Ranger) | No anomaly alerts | Link state mismatches, timing deviations |
 | **Power Management** | ASPM state transitions, D-state cycling | Identical power behavior to donor | PME assertion failures, ASPM violations |

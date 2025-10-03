@@ -142,4 +142,4 @@ These exceptions are clearly documented and use different validation logic.
 
 ---
 
-**See Also**: [Device Cloning Guide](device-cloning), [Firmware Uniqueness](firmware-uniqueness), [Supported Devices](supported-devices)
+**See Also**: [Device Cloning Guide](device-cloning.md), [Firmware Uniqueness](firmware-uniqueness.md), [Supported Devices](supported-devices.md)

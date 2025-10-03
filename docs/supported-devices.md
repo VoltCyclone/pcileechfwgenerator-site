@@ -90,7 +90,7 @@ Before using a device as a donor, verify compatibility:
 lspci -vvv -s [device_id]
 
 # Verify IOMMU group isolation
-./vfio_check.py [device_id]
+pcileech check [device_id]
 
 # Test VFIO binding
 sudo ./force_vfio_binds.sh [device_id]
@@ -193,4 +193,4 @@ When reporting device compatibility issues:
 
 ---
 
-For more information about device selection and configuration, see the [Device Cloning Guide](device-cloning) and [Development Setup](development) documentation.
+For more information about device selection and configuration, see the [Device Cloning Guide](device-cloning.md) and [Development Setup](development.md) documentation.

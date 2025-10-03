@@ -1,302 +1,154 @@
 # Quick Start Guide
 
-Get up and running with PCILeech Firmware Generator in just a few minutes! This guide assumes you have already completed the [installation](installation.md).
+Get up and running with PCILeech Firmware Generator in minutes. This guide assumes you've completed the [installation](installation.md).
 
 ## 🎯 Overview
 
-This tutorial will walk you through:
+This tutorial covers:
 
-1. Setting up a donor device
+1. Finding a donor device (BDF)
 2. Generating your first firmware
 3. Understanding the output
 4. Optional: Flashing to an FPGA
 
-## 📋 Prerequisites
-
 Before starting, ensure you have:
 
-- ✅ PCILeech Firmware Generator installed
-- ✅ At least one PCIe device bound to VFIO
-- ✅ Appropriate permissions (member of `vfio` group)
-- ✅ (Optional) Xilinx Vivado installed for synthesis
+- PCILeech Firmware Generator installed
+- At least one PCIe device bound to VFIO
+- Root access (sudo) and membership in the `vfio` group
+- (Optional) Xilinx Vivado for synthesis
 
-## Step 1: List Available Devices
+## Step 1: Find a donor device (BDF)
 
-First, let's see what devices are available for extraction:
-
-```bash
-# List all PCIe devices
-pcileech-generate --list-devices
-
-# Example output:
-# Available VFIO devices:
-# 0000:01:00.0 - Intel Corporation 82599ES 10-Gigabit SFI/SFP+ Network Connection
-# 0000:02:00.0 - NVIDIA Corporation TU106 [GeForce RTX 2060]
-# 0000:03:00.0 - Samsung Electronics Co Ltd NVMe SSD Controller SM981/PM981/PM983
-```
-
-!!! tip "No devices shown?"
-    If no devices appear, check your [VFIO setup](installation.md#vfio-setup) and ensure devices are properly bound.
-
-## Step 2: Choose Your Target Board
-
-List supported FPGA boards:
+Use lspci to discover PCIe devices and their BDFs:
 
 ```bash
-# Show available board configurations
-pcileech-generate --list-boards
+# List PCIe devices with numeric IDs (BDFs)
+lspci -Dnn
 
-# Example output:
-# Available board configurations:
-# - pcileech_100t484_x1    - Artix-7 100T, 484 BGA, PCIe x1
-# - pcileech_35t325_x4     - Artix-7 35T, 325 BGA, PCIe x4  
-# - pcileech_75t484_x1     - Artix-7 75T, 484 BGA, PCIe x1
+# Example output (note the BDF at the start of each line):
+# 0000:01:00.0  Ethernet controller [0200]: Intel Corporation 82599ES [8086:10fb]
+# 0000:02:00.0  VGA compatible controller [0300]: NVIDIA Corporation TU106 [10de:1f06]
+# 0000:03:00.0  Non-Volatile memory controller [0108]: Samsung NVMe [144d:a808]
 ```
 
-## Step 3: Generate Your First Firmware
+Pick a BDF (e.g., `0000:01:00.0`). If nothing appears, check your VFIO setup (see [Installation](installation.md#vfio-setup)).
 
-Now let's generate firmware using a donor device:
+## Step 2: Choose your target board
 
-### Basic Generation
+Supported board names are defined in the project. Common identifiers:
+
+- `pcileech_100t484_x1` — Artix-7 100T, 484 BGA, PCIe x1
+- `pcileech_35t325_x4` — Artix-7 35T, 325 BGA, PCIe x4
+- `pcileech_75t484_x1` — Artix-7 75T, 484 BGA, PCIe x1
+
+Tip: Run the interactive picker (TUI, Linux only) or consult `src/device_clone/board_config.py`.
+
+## Step 3: Generate your first firmware
+
+Use the CLI with a BDF and board name. Root privileges are required for hardware access.
 
 ```bash
-# Generate firmware from Intel network card to Artix-7 100T board
-pcileech-generate \
-  --device 0000:01:00.0 \
-  --board pcileech_100t484_x1 \
-  --output my_first_firmware
-
-# The generator will:
-# 1. Extract device configuration via VFIO
-# 2. Analyze PCIe capabilities
-# 3. Generate SystemVerilog files
-# 4. Create Vivado project files
-# 5. Save everything to ./my_first_firmware/
+sudo pcileech build --bdf 0000:01:00.0 --board pcileech_100t484_x1
 ```
 
-### With Interactive TUI
-
-For a guided experience, use the Terminal User Interface:
+### With interactive TUI (Linux only)
 
 ```bash
-# Launch interactive mode
-pcileech-generate --tui
-
-# Follow the prompts to:
-# - Select donor device
-# - Choose target board
-# - Configure options
-# - Generate firmware
+sudo pcileech tui
 ```
 
-### Advanced Options
+From a developer checkout, install the console entrypoint (`pip install -e .`) to use the `pcileech` command. Containers are optional and not required for VFIO workflows.
+
+### Container notes (FYI only)
+
+- You don't need to manually build or run a container for VFIO generation.
+- CI may build a local image; treat it as an internal detail.
+- Kernel-linked helpers must be built against the host kernel (see `src/donor_dump/Makefile`).
+
+### Advanced options
 
 ```bash
-# Generate with custom options
-pcileech-generate \
-  --device 0000:01:00.0 \
-  --board pcileech_100t484_x1 \
-  --output custom_firmware \
-  --device-id 0x1234 \
-  --vendor-id 0x8086 \
-  --unique \
-  --verbose
+# Enable advanced SystemVerilog features and manufacturing variance
+sudo pcileech build --bdf 0000:01:00.0 --board pcileech_100t484_x1 --advanced-sv --enable-variance
+
+# Generate a donor-info JSON template alongside build artifacts
+sudo pcileech build --bdf 0000:01:00.0 --board pcileech_100t484_x1 --generate-donor-template donor_info.json
 ```
 
-## Step 4: Understanding the Output
+Note: Older flags like `--device-id`, `--vendor-id`, or `--unique` are not supported directly. Use donor templates and the build configuration. See [Firmware Uniqueness](firmware-uniqueness.md).
 
-After generation, you'll find several important files:
+## Step 4: Understand the output
 
-```
+After generation you'll find a build directory. Typical artifacts include:
+
+```text
 my_first_firmware/
 ├── pcileech_top.sv           # Top-level SystemVerilog module
-├── pcileech_tlps128_bar.sv   # BAR controller implementation
+├── <board>_bar_*.sv         # Board-specific controllers
 ├── config_space_init.hex     # Configuration space initialization
-├── vivado_project.tcl        # Vivado project script
-├── build_instructions.md     # How to build the project
-├── device_info.json          # Extracted device information
+├── vivado_project.tcl        # Vivado project / synthesis script
+├── device_info.json          # Extracted device information (donor info)
 └── logs/
-    ├── generation.log        # Detailed generation log
-    └── vfio_extraction.log   # VFIO extraction details
+  ├── generation.log        # Detailed generation log
+  └── vfio_extraction.log   # VFIO extraction details
 ```
 
-### Key Files Explained
-
-- **`pcileech_top.sv`**: The main FPGA design file
-- **`config_space_init.hex`**: Device configuration data for BRAM initialization
-- **`vivado_project.tcl`**: Ready-to-use Vivado project script
-- **`device_info.json`**: Complete device analysis and extracted data
-
-## Step 5: Verify Generation Success
-
-Check that generation completed successfully:
+## Step 5: Verify generation success
 
 ```bash
 # Verify output files
 ls -la my_first_firmware/
 
 # Check generation log for any issues
-cat my_first_firmware/logs/generation.log | grep -i error
+grep -i error my_first_firmware/logs/generation.log || echo "No errors found"
 
-# Validate SystemVerilog syntax (requires Vivado)
-pcileech-generate --validate my_first_firmware/
+# Validate SystemVerilog / run synthesis with Vivado (optional)
+cd my_first_firmware/
+vivado -mode batch -source vivado_project.tcl
 ```
 
-## Step 6: Build FPGA Bitstream (Optional)
-
-If you have Xilinx Vivado installed, you can synthesize the design:
+## Step 6: Build FPGA bitstream (optional)
 
 ```bash
-# Navigate to output directory
 cd my_first_firmware/
-
-# Run Vivado synthesis
 vivado -mode batch -source vivado_project.tcl
 
-# Or use the generator's build command
-pcileech-generate --build .
-
-# The bitstream will be saved as:
-# - project.runs/impl_1/pcileech_top.bit
+# Bitstream typically appears under:
+# project.runs/impl_1/pcileech_top.bit
 ```
 
-## Step 7: Flash to FPGA (Optional)
-
-If you have a compatible FPGA board and USB-JTAG programmer:
+## Step 7: Flash to FPGA (optional)
 
 ```bash
-# Flash the generated firmware directly
-pcileech-generate \
-  --device 0000:01:00.0 \
-  --board pcileech_100t484_x1 \
-  --flash
-
-# Or flash an existing bitstream
-pcileech-generate --flash-bitstream my_first_firmware/pcileech_top.bit
+sudo pcileech flash my_first_firmware/pcileech_top.bin --board pcileech_100t484_x1
 ```
 
-## 🎛️ Interactive TUI Mode
+## Custom donor templates
 
-For beginners, the TUI provides a user-friendly interface:
+Generate and use a donor template:
 
 ```bash
-# Launch TUI
-pcileech-generate --tui
+sudo pcileech donor-template --save-to my_device.json --bdf 0000:01:00.0
+
+# Edit my_device.json as needed, then:
+sudo pcileech build --bdf 0000:01:00.0 --board pcileech_100t484_x1 --donor-template my_device.json
 ```
 
-The TUI will guide you through:
+## ✨ Tips for success
 
-1. **Device Selection**: Browse and select from available VFIO devices
-2. **Board Configuration**: Choose your target FPGA board
-3. **Generation Options**: Configure device IDs, uniqueness, etc.
-4. **Progress Monitoring**: Real-time generation progress
-5. **Result Review**: Summary of generated files and next steps
+1. Choose simple donors first (NICs are easier than GPUs).
+2. Match PCIe lane count to your use case.
+3. Always review generation logs and `device_info.json`.
+4. Enforce uniqueness: don't hardcode IDs. See [Firmware Uniqueness](firmware-uniqueness.md).
 
-## 🔧 Common Use Cases
+## 🎓 Next steps
 
-### Network Card Cloning
-
-```bash
-# Clone Intel 10G network card
-pcileech-generate \
-  --device 0000:01:00.0 \
-  --board pcileech_100t484_x1 \
-  --unique \
-  --output intel_10g_clone
-```
-
-### NVMe Storage Controller
-
-```bash
-# Clone Samsung NVMe controller
-pcileech-generate \
-  --device 0000:03:00.0 \
-  --board pcileech_35t325_x4 \
-  --output nvme_controller
-```
-
-### Custom Device ID
-
-```bash
-# Generate with custom IDs
-pcileech-generate \
-  --device 0000:01:00.0 \
-  --board pcileech_100t484_x1 \
-  --vendor-id 0x1234 \
-  --device-id 0x5678 \
-  --output custom_device
-```
-
-## 🐛 Troubleshooting Quick Fixes
-
-### "No VFIO devices found"
-
-```bash
-# Check VFIO module is loaded
-lsmod | grep vfio
-
-# Verify device is bound to VFIO
-ls /sys/bus/pci/drivers/vfio-pci/
-```
-
-### "Permission denied accessing device"
-
-```bash
-# Check group membership
-groups | grep vfio
-
-# Add user to vfio group if needed
-sudo usermod -a -G vfio $USER
-# Log out and back in
-```
-
-### "Vivado not found"
-
-```bash
-# Source Vivado environment
-source /opt/Xilinx/Vivado/*/settings64.sh
-
-# Or add to your shell profile
-echo 'source /opt/Xilinx/Vivado/2023.1/settings64.sh' >> ~/.bashrc
-```
-
-## ✨ Tips for Success
-
-### 1. Choose the Right Donor Device
-- Simple devices (network cards) are easier than complex ones (GPUs)
-- Ensure the device has standard PCIe capabilities
-- Check that VFIO can access all configuration space
-
-### 2. Match PCIe Lane Count
-- Use x1 boards for x1 devices
-- Use x4 boards for high-bandwidth devices
-- Consider the target use case for lane count selection
-
-### 3. Verify Before Building
-- Always check the generation log for warnings
-- Validate device information in `device_info.json`
-- Test with simulation before hardware synthesis
-
-### 4. Keep Unique Identifiers
-- Use `--unique` flag to generate unique device/vendor IDs
-- This prevents conflicts with real hardware
-- Important for security research applications
-
-## 🎓 Next Steps
-
-Now that you've generated your first firmware:
-
-1. **[Device Cloning Guide](device-cloning.md)**: Learn advanced device extraction techniques
-2. **[Template Architecture](template-architecture.md)**: Understand how the generation works
-3. **[Development Guide](development.md)**: Contribute to the project
-4. **[Troubleshooting](troubleshooting.md)**: Fix common issues
-
-## 📚 Additional Resources
-
-- **[Configuration Space Documentation](config-space-shadow.md)**: Deep dive into PCIe config space handling
-- **[Supported Devices](supported-devices.md)**: Full list of tested devices
-- **[TUI Guide](tui-readme.md)**: Complete TUI interface documentation
+- [Device Cloning](device-cloning.md)
+- [Template Architecture](template-architecture.md)
+- [Development Guide](development.md)
+- [Troubleshooting](troubleshooting.md)
 
 ---
 
-**Questions?** Check our [Troubleshooting Guide](troubleshooting.md) or join the [Discord Community](https://discord.gg/your-server)!
+Questions? See [Troubleshooting](troubleshooting.md) or [Issue Reporting](issue-reporting.md).

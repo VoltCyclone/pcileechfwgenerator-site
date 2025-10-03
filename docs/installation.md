@@ -21,22 +21,22 @@ This guide will walk you through installing the PCILeech Firmware Generator on y
 
 ```bash
 # Install the latest stable release
-pip install pcileech-fw-generator
+pip install pcileechfwgenerator
 
 # Verify installation
-pcileech-generate --version
+pcileech --version
 ```
 
 ### Method 2: Install from Source
 
 ```bash
 # Clone the repository
-git clone https://github.com/ramseymcgrath/PCILeechFWGenerator.git
+git clone https://github.com/VoltCyclone/PCILeechFWGenerator.git
 cd PCILeechFWGenerator
 
 # Create virtual environment (recommended)
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 
 # Install in development mode
 pip install -e .
@@ -45,19 +45,16 @@ pip install -e .
 pip install .
 ```
 
-### Method 3: Using Docker/Podman
+### Method 3: Container (optional)
 
-```bash
-# Pull the container image
-docker pull ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
+A `Containerfile` is provided primarily for CI and for creating a reproducible runtime image. You do not need to build or run the container to use the generator for VFIO-based workflows — prefer installing from PyPI or running from source as shown in Methods 1 and 2.
 
-# Run with current directory mounted
-docker run -it --rm \
-  -v $(pwd):/workspace \
-  -v /dev:/dev \
-  --privileged \
-  ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
-```
+Important notes:
+
+- The kernel module and any kernel-linked helpers (for donor dumping) must be built on the host kernel and cannot be reliably built or loaded from inside the container. See `src/donor_dump/Makefile` for host build instructions.
+- The container is optional. It is intended for CI and reproducible runtimes only; it is not required for normal development or hardware access.
+
+If you are using CI or need a reproducible image, you may still build the container locally; do not assume the image will be pulled from a public registry. Building or running the image is optional and not required for VFIO workflows.
 
 ## VFIO Setup
 
@@ -186,16 +183,13 @@ Verify your installation:
 
 ```bash
 # Check basic installation
-pcileech-generate --help
+pcileech --help
 
 # Check VFIO access (requires bound device)
-pcileech-generate --list-devices
+lspci -Dnn
 
 # Check Vivado integration (if installed)
-pcileech-generate --check-tools
-
-# Run self-test
-pcileech-generate --self-test
+pcileech check
 ```
 
 ## Troubleshooting
@@ -203,6 +197,7 @@ pcileech-generate --self-test
 ### Common Issues
 
 #### Permission Denied
+
 ```bash
 # Add user to vfio group
 sudo usermod -a -G vfio $USER
@@ -214,6 +209,7 @@ sudo usermod -a -G plugdev $USER
 ```
 
 #### IOMMU Not Available
+
 ```bash
 # Check IOMMU status
 dmesg | grep -i iommu
@@ -223,6 +219,7 @@ cat /proc/cmdline
 ```
 
 #### Device Not Found
+
 ```bash
 # Check device binding
 ls -la /sys/bus/pci/drivers/vfio-pci/
@@ -232,6 +229,7 @@ find /sys/kernel/iommu_groups/ -type l
 ```
 
 #### Vivado Not Found
+
 ```bash
 # Check Vivado installation
 which vivado
@@ -245,10 +243,8 @@ source /opt/Xilinx/Vivado/*/settings64.sh
 If you encounter issues:
 
 1. Check the [Troubleshooting Guide](troubleshooting.md)
-2. Review the [FAQ](https://github.com/ramseymcgrath/PCILeechFWGenerator/wiki/FAQ)
-3. Search existing [GitHub Issues](https://github.com/ramseymcgrath/PCILeechFWGenerator/issues)
-4. Join our [Discord Community](https://discord.gg/your-server)
-5. Create a new issue with detailed logs and system information
+2. Search existing [GitHub Issues](https://github.com/VoltCyclone/PCILeechFWGenerator/issues)
+3. Create a new issue with detailed logs and system information
 
 ## Next Steps
 

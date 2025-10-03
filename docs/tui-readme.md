@@ -11,45 +11,45 @@ A modern Text User Interface (TUI) for the PCILeech firmware generation workflow
 
 ## 📑 Table of Contents
 
-- [🔍 Overview](#-overview)
-- [🚀 Installation](#-installation)
+- [🔍 Overview](#overview)
+- [🚀 Installation](#installation)
   - [Prerequisites](#prerequisites)
   - [Install TUI Dependencies](#install-tui-dependencies)
-- [🎮 Usage](#-usage)
+- [🎮 Usage](#usage)
   - [Launch TUI Mode](#launch-tui-mode)
   - [TUI Interface Overview](#tui-interface-overview)
-- [✨ Features](#-features)
+- [✨ Features](#features)
   - [Device Management](#device-management)
   - [Configuration Management](#configuration-management)
   - [Build Monitoring](#build-monitoring)
   - [System Integration](#system-integration)
-- [⚙️ Configuration Profiles](#️-configuration-profiles)
+- [⚙️ Configuration Profiles](#configuration-profiles)
   - [Profile Locations](#profile-locations)
   - [Default Profiles](#default-profiles)
   - [Creating Custom Profiles](#creating-custom-profiles)
-- [⌨️ Keyboard Shortcuts](#️-keyboard-shortcuts)
-- [🔧 Error Handling](#-error-handling)
+- [⌨️ Keyboard Shortcuts](#keyboard-shortcuts)
+- [🔧 Error Handling](#error-handling)
   - [Common Errors and Solutions](#common-errors-and-solutions)
-- [🚀 Advanced Features](#-advanced-features)
+- [🚀 Advanced Features](#advanced-features)
   - [Behavior Profiling](#behavior-profiling)
   - [System Status Monitoring](#system-status-monitoring)
   - [Build Process Integration](#build-process-integration)
   - [Configuration Validation](#configuration-validation)
-- [🐛 Troubleshooting](#-troubleshooting)
+- [🐛 Troubleshooting](#troubleshooting)
   - [TUI Won't Start](#tui-wont-start)
   - [Device Detection Issues](#device-detection-issues)
   - [Build Failures](#build-failures)
-- [🛠️ Development](#️-development)
+- [🛠️ Development](#development)
   - [Architecture](#architecture)
   - [Key Components](#key-components)
   - [Extending the TUI](#extending-the-tui)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [⚠️ Disclaimer](#️-disclaimer)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
+- [⚠️ Disclaimer](#disclaimer)
 
 ---
 
-## 🔍 Overview
+## 🔍 Overview { #overview }
 
 The TUI provides an interactive, user-friendly interface that addresses the key pain points of the command-line workflow:
 
@@ -59,7 +59,7 @@ The TUI provides an interactive, user-friendly interface that addresses the key 
 - **Error Guidance**: Intelligent error analysis with suggested fixes
 - **Profile Management**: Save and load configuration profiles
 
-## 🚀 Installation
+## 🚀 Installation { #installation }
 
 ### Prerequisites
 
@@ -78,7 +78,7 @@ pip install -r requirements-tui.txt
 pip install textual rich psutil watchdog pydantic
 ```
 
-## 🎮 Usage
+## 🎮 Usage { #usage }
 
 ### Launch TUI Mode
 
@@ -86,7 +86,8 @@ There are several ways to launch the TUI:
 
 ```bash
 # Method 1: Using the unified entrypoint (recommended)
-sudo python3 pcileech.py tui
+
+sudo pcileech tui
 
 # Method 2: Direct execution 
 sudo python3 -m src.tui.main
@@ -102,7 +103,9 @@ pcileech-tui-sudo
 
 The TUI is organized into several panels:
 
-#### 1. Device Selection Panel (Top Left)
+```
+# If developing from source, run the `pcileech` entrypoint from the checkout.
+```
 - Lists all detected PCIe devices
 - Shows device status, BDF address, name, driver, and IOMMU group
 - Provides device suitability indicators
@@ -133,7 +136,7 @@ The TUI is organized into several panels:
 - Advanced settings
 - Documentation links
 
-## ✨ Features
+## ✨ Features { #features }
 
 ### Device Management
 
@@ -171,7 +174,7 @@ The TUI is organized into several panels:
 - **Log Management**: Integrated log viewing and analysis
 - **USB Device Support**: Automatic USB device detection for flashing
 
-## ⚙️ Configuration Profiles
+## ⚙️ Configuration Profiles { #configuration-profiles }
 
 ### Profile Locations
 
@@ -224,7 +227,7 @@ Profiles are stored in `~/.pcileech/profiles/` as JSON files.
 3. Enter a profile name
 4. Profile is saved to `~/.pcileech/profiles/`
 
-## ⌨️ Keyboard Shortcuts
+## ⌨️ Keyboard Shortcuts { #keyboard-shortcuts }
 
 - `Ctrl+C`: Exit application
 - `Tab`: Navigate between panels
@@ -233,7 +236,7 @@ Profiles are stored in `~/.pcileech/profiles/` as JSON files.
 - `↑/↓`: Navigate lists and tables
 - `F1`: Help (if implemented)
 
-## 🔧 Error Handling
+## 🔧 Error Handling { #error-handling }
 
 The TUI provides intelligent error analysis and guidance:
 
@@ -247,19 +250,19 @@ The TUI provides intelligent error analysis and guidance:
   - Unbind current driver first
 
 #### Container Image Not Found
-- **Cause**: DMA firmware container not built
+- **Cause**: Optional DMA firmware container image not built
 - **Solutions**:
-  - The container is now automatically built when needed
-  - If automatic build fails, manually build with: `podman build -t dma-fw .`
-  - Check Podman installation and internet connectivity
+  - The container image is optional; most workflows run directly on the host.
+  - If you need an isolated image for testing, build locally with Podman: `podman build -t dma-fw .`
+  - Check Podman installation and internet connectivity (only relevant when using the optional container)
 
 #### Insufficient Permissions
 - **Cause**: Not running with root privileges
 - **Solutions**:
-  - Run with sudo: `sudo python3 pcileech.py tui`
+  - Run with sudo: `sudo pcileech tui`
   - Add user to required groups
 
-## 🚀 Advanced Features
+## 🚀 Advanced Features { #advanced-features }
 
 ### Donor Device Configuration
 
@@ -344,7 +347,7 @@ The TUI continuously monitors:
 - **Compatibility Checks**: Warns about incompatible settings
 - **Resource Requirements**: Estimates resource requirements
 
-## 🐛 Troubleshooting
+## 🐛 Troubleshooting { #troubleshooting }
 
 ### TUI Won't Start
 
@@ -371,7 +374,7 @@ The TUI continuously monitors:
    pcileech-tui-sudo
    
    # Or directly with sudo
-   sudo python3 pcileech.py tui
+  sudo pcileech tui
    ```
    
    > **Note**: When running with sudo, you might encounter the error `ModuleNotFoundError: No module named 'src'`. This happens because sudo changes the Python module search path. Use the provided sudo wrapper script to avoid this issue.
@@ -390,7 +393,8 @@ The TUI continuously monitors:
 
 1. **Check Container Image**:
    ```bash
-   podman images | grep dma-fw
+  # If you built the optional image:
+  podman images | grep dma-fw
    ```
 
 2. **Verify Device Binding**:
@@ -402,7 +406,7 @@ The TUI continuously monitors:
    - Use "View Logs" button in TUI
    - Check `generate.log` file
 
-## 🛠️ Development
+## 🛠️ Development { #development }
 
 ### Architecture
 
@@ -432,7 +436,7 @@ src/tui/
 3. **Extend Models**: Add new data models in `src/tui/models/`
 4. **Add Services**: Create new services in `src/tui/core/`
 
-## 🤝 Contributing
+## 🤝 Contributing { #contributing }
 
 1. Follow the existing code structure
 2. Add type hints to all functions
@@ -440,11 +444,11 @@ src/tui/
 4. Test with various PCIe devices
 5. Ensure backward compatibility
 
-## 📄 License
+## 📄 License { #license }
 
 Same as the main PCILeech project.
 
-## ⚠️ Disclaimer
+## ⚠️ Disclaimer { #disclaimer }
 
 This tool is intended for educational research and legitimate PCIe development purposes only. Users are responsible for ensuring compliance with all applicable laws and regulations. The authors assume no liability for misuse of this software.
 

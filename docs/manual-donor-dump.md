@@ -486,14 +486,13 @@ test_donor_integration() {
         return 1
     fi
     
-    # Test dry-run with PCILeech generator
-    if command -v pcileech-generate >/dev/null 2>&1; then
-        echo "Testing with PCILeech generator (dry-run)..."
-        if pcileech-generate \
+    # Test with PCILeech CLI
+    if command -v pcileech >/dev/null 2>&1; then
+        echo "Testing with pcileech (build dry-run)..."
+        if pcileech build \
             --bdf "$test_bdf" \
             --board "$test_board" \
-            --donor-info-file "$donor_file" \
-            --dry-run; then
+            --donor-template "$donor_file"; then
             echo "✅ Integration test PASSED"
             return 0
         else
@@ -501,7 +500,7 @@ test_donor_integration() {
             return 1
         fi
     else
-        echo "⚠ PCILeech generator not available, skipping integration test"
+        echo "⚠ pcileech not available, skipping integration test"
         return 0
     fi
 }
@@ -513,7 +512,8 @@ test_donor_integration() {
 
 #### Linux-Specific Issues
 
-**1. Kernel Headers Mismatch**
+#### Kernel Headers Mismatch
+
 ```bash
 # Problem: Headers don't match running kernel
 # Solution: Install correct headers or use DKMS
@@ -530,7 +530,8 @@ sudo dkms build donor_dump/1.0
 sudo dkms install donor_dump/1.0
 ```
 
-**2. Module Loading Failures**
+#### Module Loading Failures
+
 ```bash
 # Comprehensive module debugging
 debug_module_load() {
@@ -557,7 +558,8 @@ debug_module_load() {
 }
 ```
 
-**3. Device Access Issues**
+#### Device Access Issues
+
 ```bash
 # Check device binding and driver conflicts
 check_device_binding() {
@@ -722,9 +724,10 @@ secure_module_load() {
     local module_path="$1
 ```
 
-### Automation Integration
+### Automation Integration (continued)
 
-#### CI/CD Pipeline Integration
+#### CI/CD Pipeline Integration (continued)
+
 ```yaml
 # .github/workflows/donor-dump-validation.yml
 name: Donor Dump Validation
@@ -754,9 +757,10 @@ jobs:
           done
 ```
 
-### Security Considerations
+### Security Considerations (continued)
 
-#### Safe Module Handling
+#### Safe Module Handling (continued)
+
 ```bash
 # Secure module loading with verification
 secure_module_load() {
@@ -833,7 +837,7 @@ check_privileges() {
 This enhanced manual donor dump generation guide provides:
 
 - **Comprehensive error handling** for robust operation
-- **Cross-platform support** for Linux and Windows
+- **Platform support**: Linux (VFIO-based flows). This documentation assumes a Linux host with VFIO available.
 - **Validation and testing frameworks** for quality assurance
 - **Performance optimizations** for batch processing
 - **Security considerations** for safe operation
@@ -845,7 +849,7 @@ The manual process gives you complete control over donor dump generation, making
 - **Custom integration** with existing workflows
 - **Educational purposes** to understand the process
 
-For most users, the automated [`pcileech.py`](../PCILeechFWGenerator/pcileech.py) command or [TUI interface](tui-readme.md) remains the recommended approach, but this manual process provides a powerful alternative when needed.
+For most users, the automated `pcileech.py` command or [TUI interface](tui-readme.md) remains the recommended approach, but this manual process provides a powerful alternative when needed.
 
 ## Quick Reference
 
@@ -861,12 +865,12 @@ sudo rmmod donor_dump
 ```
 
 ### File Locations
-- **Linux module source**: [`src/donor_dump/`](../PCILeechFWGenerator/src/donor_dump/)
-- **Validation tools**: [`scripts/validate_donor_dump.sh`](../PCILeechFWGenerator/scripts/validate_donor_dump.sh)
+- **Linux module source**: `src/donor_dump/` (in main repository)
+- **Validation tools**: `scripts/validate_donor_dump.sh` (in main repository)
 - **Output directory**: `donor_dumps/YYYYMMDD_HHMMSS_BDF/`
 
 ### Support Resources
-- **Main documentation**: [Home](Home.md)
+- **Main documentation**: [Home](index.md)
 - **TUI guide**: [TUI README](tui-readme.md)
-- **Development guide**: [Development](Development.md)
+- **Development guide**: [Development](development.md)
 - **Firmware uniqueness**: [Firmware Uniqueness](firmware-uniqueness.md)

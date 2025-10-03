@@ -21,27 +21,18 @@ The most common issues involve VFIO (Virtual Function I/O) configuration. Use th
 
 ```bash
 # Check VFIO setup and device compatibility
-sudo python3 pcileech.py check
+sudo pcileech check
 
 # Check a specific device
-sudo python3 pcileech.py check --device 0000:03:00.0
+sudo pcileech check --device 0000:03:00.0
 
 # Interactive mode with guided fixes
-sudo python3 pcileech.py check --interactive
+sudo pcileech check --interactive
 
 # Attempt automatic fixes
-sudo python3 pcileech.py check --fix
-```
+sudo pcileech check --fix
 
-### Common VFIO Problems
-
-**1. IOMMU not enabled in BIOS/UEFI**
-```bash
-# Enable VT-d (Intel) or AMD-Vi (AMD) in BIOS settings
-# Then add to /etc/default/grub GRUB_CMDLINE_LINUX:
-# For Intel: intel_iommu=on
-# For AMD: amd_iommu=on
-sudo update-grub && sudo reboot
+# When running from a developer checkout, prefer installing the console entrypoint or running `pcileech` from your checkout.
 ```
 
 **2. VFIO modules not loaded**
@@ -73,14 +64,10 @@ sudo usermod -a -G dialout $USER  # For USB-JTAG access
 ```bash
 # If pip installation fails
 pip install --upgrade pip setuptools wheel
-pip install pcileechfwgenerator[tui]
+pip install pcileechfwgenerator
 
-# For TUI dependencies
-pip install textual rich psutil watchdog
-
-# Container issues
-podman --version
-podman info | grep rootless
+# TUI (Linux only): install required UI packages
+pip install textual rich psutil
 ```
 
 ## BAR Detection Issues
@@ -88,16 +75,11 @@ podman info | grep rootless
 **Problem**: BARs not detected or incorrectly sized
 
 **Solutions**:
-1. Ensure device is properly bound to VFIO
-2. Check that the device is not in use by another driver
-3. Verify IOMMU group isolation
-4. Use manual BAR specification if auto-detection fails
 
-```bash
-# Manual BAR specification
-sudo python3 pcileech.py build --bdf 0000:03:00.0 \
-  --bar0-size 0x1000 --bar1-size 0x100000
-```
+1. Ensure device is properly bound to VFIO
+1. Check that the device is not in use by another driver
+1. Verify IOMMU group isolation
+1. Regenerate after fixing binding and IOMMU issues
 
 ## VFIO Binding Problems
 
@@ -106,17 +88,20 @@ sudo python3 pcileech.py build --bdf 0000:03:00.0 \
 **Solutions**:
 
 1. **Check if device is in use**:
+
 ```bash
 lspci -k -s 0000:03:00.0
 # Should show vfio-pci as driver
 ```
 
-2. **Unbind from current driver**:
+1. **Unbind from current driver**:
+
 ```bash
 echo "0000:03:00.0" | sudo tee /sys/bus/pci/devices/0000:03:00.0/driver/unbind
 ```
 
-3. **Bind to VFIO**:
+1. **Bind to VFIO**:
+
 ```bash
 echo "1234 5678" | sudo tee /sys/bus/pci/drivers/vfio-pci/new_id
 ```
@@ -134,7 +119,7 @@ echo "1234 5678" | sudo tee /sys/bus/pci/drivers/vfio-pci/new_id
 
 ```bash
 # Enable verbose logging
-sudo python3 pcileech.py build --bdf 0000:03:00.0 --verbose
+sudo pcileech build --bdf 0000:03:00.0 -v
 ```
 
 ## Device-Specific Issues
@@ -163,23 +148,9 @@ sudo python3 pcileech.py build --bdf 0000:03:00.0 --verbose
 
 **Solutions**:
 
-1. **Check template integrity**:
-```bash
-# Verify template files are not corrupted
-ls -la templates/
-```
-
-2. **Validate device data**:
-```bash
-# Use debug mode to inspect extracted data
-sudo python3 pcileech.py build --debug --dry-run
-```
-
-3. **Manual template fixes**:
-```bash
-# Edit templates if necessary
-vim templates/pcileech_tlps128_bar_controller.sv.j2
-```
+1. Check device extraction completed without errors (see generation log)
+2. Enable verbose logging to capture more detail (-v)
+3. If you suspect a template issue, open an issue with logs; avoid editing templates unless you’re contributing
 
 ## Getting Help
 
@@ -187,7 +158,7 @@ If you're still experiencing issues:
 
 1. **Check the documentation**: Browse all available guides
 2. **Use diagnostic tools**: Run built-in checks and diagnostics
-3. **Enable debug logging**: Use `--debug` and `--verbose` flags
+3. **Enable verbose logging**: Use `-v`
 4. **Search existing issues**: Check GitHub issues for similar problems
 5. **Create a detailed issue**: Include logs, system info, and device details
 
@@ -197,14 +168,12 @@ Include the following information:
 
 - Operating system and kernel version
 - Device PCI ID and BDF
-- Complete error logs with `--debug` enabled
+- Complete error logs with `-v` enabled
 - Output of diagnostic checks
 - Steps to reproduce the issue
 
 ### Community Support
 
-- **GitHub Issues**: For bug reports and feature requests
-- **GitHub Discussions**: For questions and community help
-- **Discord**: Real-time community support
+- See [Issue Reporting](issue-reporting.md) for what to include and how to share logs
 
 Remember: This tool requires real hardware and proper VFIO setup. Most issues are related to VFIO configuration rather than the tool itself.

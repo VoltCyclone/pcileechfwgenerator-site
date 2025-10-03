@@ -1,8 +1,8 @@
 site_name: PCILeech Firmware Generator
 site_description: Generate authentic PCIe DMA firmware from real donor hardware
 site_url: https://pcileechfwgenerator.pages.dev
-repo_url: https://github.com/ramseymcgrath/PCILeechFWGenerator
-repo_name: ramseymcgrath/PCILeechFWGenerator
+repo_url: https://github.com/VoltCyclone/PCILeechFWGenerator
+repo_name: VoltCyclone/PCILeechFWGenerator
 edit_uri: edit/main/site/docs/
 
 theme:
@@ -39,7 +39,8 @@ plugins:
   - search
   - git-revision-date-localized:
       enable_creation_date: true
-  - git-authors
+  # Disabled to avoid strict-mode warnings on uncommitted files during local builds
+  # - git-authors
 
 markdown_extensions:
   - admonition
@@ -51,9 +52,6 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - tables
   - footnotes
   - def_list
@@ -80,16 +78,18 @@ nav:
     - Reference:
       - Supported Devices: supported-devices.md
       - No Fallback Policy: no-fallback-policy.md
-      - Troubleshooting: troubleshooting.md
+  - Kernel Driver Metadata: kernel-driver-metadata.md
+  - Error Injection: error-injection.md
+  - Issue Reporting: issue-reporting.md
+  - PCIe Power Management: pcie-power-management.md
+  - Troubleshooting: troubleshooting.md
   - Development:
     - Development Guide: development.md
-    - Contributing: ../CONTRIBUTING.rst
-    - Code of Conduct: ../CODE_OF_CONDUCT.md
 
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/ramseymcgrath/PCILeechFWGenerator
+      link: https://github.com/VoltCyclone/PCILeechFWGenerator
     - icon: fontawesome/brands/discord
       link: https://discord.com/users/429866199833247744
 
