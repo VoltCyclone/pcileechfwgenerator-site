@@ -156,7 +156,15 @@ The validated context drives the Jinja2/SystemVerilog template engine:
 
 ## Quick Start Command
 
+### For Installed Package
+
 ```bash
 # Enable IOMMU and run generator
+pcileech-sudo build --bdf 0000:01:00.0 --board pcileech_35t325_x4
+```
+
+### For Development from Repository
+
+```bash
 sudo python3 pcileech.py build --bdf 0000:01:00.0 --board pcileech_35t325_x4
 ```

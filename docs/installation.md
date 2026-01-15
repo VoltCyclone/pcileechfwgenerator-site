@@ -1,263 +1,251 @@
 # Installation Guide
 
-This guide will walk you through installing the PCILeech Firmware Generator on your system.
+This is the **one definitive guide** for installing PCILeech Firmware Generator. Follow these steps in order.
 
 ## System Requirements
 
-### Operating System
-- **Linux**: Ubuntu 20.04+ (recommended), Debian 11+, RHEL 8+, or similar
-- **Python**: 3.8 or higher
-- **Memory**: 4GB RAM minimum, 8GB recommended for complex devices
-- **Storage**: 2GB free space for FPGA tools and generated firmware
+| Requirement | Details |
+|-------------|---------|
+| **Operating System** | Linux only (Ubuntu 22.04+ recommended) |
+| **Python** | 3.11 or higher |
+| **RAM** | 4GB minimum, 8GB recommended |
+| **Disk** | 2GB free space |
+| **Hardware** | Any PCIe device as donor (cheap NICs work great) |
 
-### Hardware Requirements
-- **FPGA Development Board**: Supported Xilinx board (see [Supported Devices](supported-devices.md))
-- **Donor PCIe Device**: Any standard PCIe device for configuration extraction
-- **USB-JTAG Programmer**: For optional FPGA programming (Xilinx Platform Cable or compatible)
+## Step 1: Install the Package
 
-## Installation Methods
+### On Ubuntu 22.04+ / Debian 12+ / Modern Linux
 
-### Method 1: Install from PyPI (Recommended)
+Modern Linux distributions protect system Python. You **must** use a virtual environment:
 
 ```bash
-# Install the latest stable release
-pip install pcileech-fw-generator
+# Create virtual environment
+python3 -m venv ~/.pcileech-venv
 
-# Verify installation
-pcileech-generate --version
+# Activate it
+source ~/.pcileech-venv/bin/activate
+
+# Install with TUI support (recommended)
+pip install pcileechfwgenerator[tui]
+
+# Verify it works
+pcileech version
 ```
 
-### Method 2: Install from Source
+!!! warning "Don't skip the virtual environment"
+    Running `pip install pcileechfwgenerator` directly **will fail** on modern systems with an `externally-managed-environment` error. Always use a venv.
+
+### Running with Root Access (Required for VFIO)
+
+Since VFIO requires root, you must use the venv's Python directly with sudo:
 
 ```bash
-# Clone the repository
-git clone https://github.com/ramseymcgrath/PCILeechFWGenerator.git
-cd PCILeechFWGenerator
+# This is the correct way to run with sudo:
+sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main tui
 
-# Create virtual environment (recommended)
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Add this alias to your ~/.bashrc for convenience:
+echo "alias pcileech-sudo='sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main'" >> ~/.bashrc
+source ~/.bashrc
 
-# Install in development mode
-pip install -e .
-
-# Or install normally
-pip install .
+# Then you can simply run:
+pcileech-sudo tui
+pcileech-sudo build --bdf 0000:03:00.0 --board pcileech_35t325_x1
 ```
 
-### Method 3: Using Docker/Podman
+## Step 2: Enable IOMMU
+
+IOMMU must be enabled in your BIOS and kernel for VFIO to work.
+
+### 2.1 Edit GRUB Configuration
 
 ```bash
-# Pull the container image
-docker pull ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
-
-# Run with current directory mounted
-docker run -it --rm \
-  -v $(pwd):/workspace \
-  -v /dev:/dev \
-  --privileged \
-  ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
+sudo nano /etc/default/grub
 ```
 
-## VFIO Setup
-
-The generator requires VFIO drivers to access donor devices. Here's how to set them up:
-
-### 1. Enable IOMMU
-
-Add to your kernel command line (usually in `/etc/default/grub`):
+Find the line starting with `GRUB_CMDLINE_LINUX` and add IOMMU parameters:
 
 ```bash
-# For Intel CPUs
+# For Intel CPUs:
 GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt"
 
-# For AMD CPUs
+# For AMD CPUs:
 GRUB_CMDLINE_LINUX="amd_iommu=on iommu=pt"
 ```
 
-Update GRUB and reboot:
+### 2.2 Update GRUB and Reboot
 
 ```bash
 sudo update-grub
 sudo reboot
 ```
 
-### 2. Load VFIO Modules
+### 2.3 Verify IOMMU is Active
+
+After reboot:
 
 ```bash
-# Load required modules
-sudo modprobe vfio-pci
-sudo modprobe vfio-iommu-type1
-
-# Make persistent (add to /etc/modules)
-echo "vfio-pci" | sudo tee -a /etc/modules
-echo "vfio-iommu-type1" | sudo tee -a /etc/modules
-```
-
-### 3. Bind Device to VFIO
-
-Find your device:
-
-```bash
-# List PCIe devices
-lspci -nn
-
-# Example output:
-# 01:00.0 Ethernet controller [0200]: Intel Corporation 82599ES [8086:10fb]
-```
-
-Bind to VFIO:
-
-```bash
-# Replace with your device ID and vendor:device codes
-echo "8086 10fb" | sudo tee /sys/bus/pci/drivers/vfio-pci/new_id
-echo "0000:01:00.0" | sudo tee /sys/bus/pci/devices/0000:01:00.0/driver/unbind
-echo "0000:01:00.0" | sudo tee /sys/bus/pci/drivers/vfio-pci/bind
-```
-
-## Xilinx Vivado Setup (Optional)
-
-For FPGA synthesis and programming, install Xilinx Vivado:
-
-### 1. Download Vivado
-
-- Visit [Xilinx Downloads](https://www.xilinx.com/support/download.html)
-- Download Vivado ML Edition (2020.1 or later)
-- Choose WebPACK (free) or Standard/Enterprise edition
-
-### 2. Install Vivado
-
-```bash
-# Extract and run installer
-tar -xvf Xilinx_Unified_*.tar.gz
-cd Xilinx_Unified_*/
-sudo ./xsetup
-```
-
-### 3. Setup Environment
-
-Add to your `~/.bashrc` or `~/.zshrc`:
-
-```bash
-# Xilinx Vivado
-source /opt/Xilinx/Vivado/2023.1/settings64.sh  # Adjust version
-export PATH=$PATH:/opt/Xilinx/Vivado/2023.1/bin
-```
-
-## USB-JTAG Driver Setup (Optional)
-
-For programming FPGAs via USB-JTAG:
-
-### 1. Install Cable Drivers
-
-```bash
-# For Xilinx Platform Cable
-cd /opt/Xilinx/Vivado/2023.1/data/xicom/cable_drivers/lin64/install_script/install_drivers
-sudo ./install_drivers
-
-# For Digilent cables
-wget https://github.com/Digilent/digilent.adept.runtime/releases/download/v2.27.9/digilent.adept.runtime_2.27.9-amd64.deb
-sudo dpkg -i digilent.adept.runtime_2.27.9-amd64.deb
-```
-
-### 2. Setup udev Rules
-
-Create `/etc/udev/rules.d/52-xilinx-ftdi-usb.rules`:
-
-```bash
-# Xilinx USB cables
-SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", GROUP="plugdev"
-SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", GROUP="plugdev"
-
-# Digilent cables
-SUBSYSTEM=="usb", ATTRS{idVendor}=="1443", GROUP="plugdev"
-```
-
-Reload udev rules:
-
-```bash
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-```
-
-## Verification
-
-Verify your installation:
-
-```bash
-# Check basic installation
-pcileech-generate --help
-
-# Check VFIO access (requires bound device)
-pcileech-generate --list-devices
-
-# Check Vivado integration (if installed)
-pcileech-generate --check-tools
-
-# Run self-test
-pcileech-generate --self-test
-```
-
-## Troubleshooting
-
-### Common Issues
-
-#### Permission Denied
-```bash
-# Add user to vfio group
-sudo usermod -a -G vfio $USER
-
-# Add user to plugdev group (for USB-JTAG)
-sudo usermod -a -G plugdev $USER
-
-# Logout and login again
-```
-
-#### IOMMU Not Available
-```bash
-# Check IOMMU status
 dmesg | grep -i iommu
+# Should show IOMMU enabled messages
 
-# Verify kernel command line
 cat /proc/cmdline
+# Should include intel_iommu=on or amd_iommu=on
 ```
 
-#### Device Not Found
+## Step 3: Load VFIO Modules
+
 ```bash
-# Check device binding
-ls -la /sys/bus/pci/drivers/vfio-pci/
+# Load modules now
+sudo modprobe vfio vfio-pci
 
-# Check IOMMU groups
-find /sys/kernel/iommu_groups/ -type l
+# Make them load on boot
+echo "vfio" | sudo tee -a /etc/modules
+echo "vfio-pci" | sudo tee -a /etc/modules
 ```
 
-#### Vivado Not Found
+## Step 4: Verify Installation
+
+Run the built-in diagnostics:
+
 ```bash
-# Check Vivado installation
-which vivado
+# Check overall system readiness
+pcileech-sudo check
 
-# Source Vivado settings
-source /opt/Xilinx/Vivado/*/settings64.sh
+# Check a specific device (replace with your device's BDF)
+pcileech-sudo check --device 0000:03:00.0 --interactive
 ```
 
-### Getting Help
+## Step 5: First Build
 
-If you encounter issues:
+You're ready to generate firmware!
 
-1. Check the [Troubleshooting Guide](troubleshooting.md)
-2. Review the [FAQ](https://github.com/ramseymcgrath/PCILeechFWGenerator/wiki/FAQ)
-3. Search existing [GitHub Issues](https://github.com/ramseymcgrath/PCILeechFWGenerator/issues)
-4. Join our [Discord Community](https://discord.gg/your-server)
-5. Create a new issue with detailed logs and system information
+```bash
+# Launch the interactive TUI (recommended for first-time users)
+pcileech-sudo tui
 
-## Next Steps
+# Or use CLI directly
+pcileech-sudo build --bdf 0000:03:00.0 --board pcileech_35t325_x1
+```
 
-Once installation is complete:
-
-1. **[Quick Start Guide](quick-start.md)**: Generate your first firmware
-2. **[Device Cloning](device-cloning.md)**: Learn about device extraction
-3. **[Development Guide](development.md)**: Contributing to the project
+See the [Quick Start Guide](quick-start.md) for detailed usage instructions.
 
 ---
 
-**Ready to generate firmware?** Continue to the [Quick Start Guide](quick-start.md)!
+## Optional: Vivado for FPGA Synthesis
+
+Vivado is only needed if you want to synthesize the generated firmware into a bitstream. The generator can produce all SystemVerilog and TCL files without Vivado.
+
+### Install Vivado WebPACK (Free)
+
+1. Download from [Xilinx Downloads](https://www.xilinx.com/support/download.html)
+2. Choose "Vivado ML Edition" → WebPACK (free, no license required)
+3. Run installer: `sudo ./xsetup`
+
+### Configure Vivado Environment
+
+Add to `~/.bashrc`:
+
+```bash
+source /opt/Xilinx/Vivado/2023.1/settings64.sh  # Adjust version
+```
+
+### Use Vivado with PCILeech
+
+```bash
+pcileech-sudo build --bdf 0000:03:00.0 --board pcileech_35t325_x1 \
+    --vivado-path /opt/Xilinx/Vivado/2023.1 \
+    --vivado-jobs 4
+```
+
+---
+
+## Optional: Container Mode (Podman)
+
+Container mode provides isolated, reproducible builds for Stage 2 (templating). The container does NOT access VFIO - all hardware access happens on the host in Stage 1.
+
+```bash
+# Install Podman
+sudo apt install podman
+
+# Container is built automatically on first use
+# No additional configuration needed
+```
+
+When you run a build, you'll be prompted to choose container or local mode. Set `PCILEECH_AUTO_CONTAINER=1` to auto-select container mode.
+
+---
+
+## Troubleshooting
+
+### "externally-managed-environment" Error
+
+You're trying to install without a virtual environment. Go back to Step 1 and create a venv.
+
+### "ModuleNotFoundError: No module named 'textual'"
+
+You installed without TUI support. Reinstall with:
+
+```bash
+source ~/.pcileech-venv/bin/activate
+pip install pcileechfwgenerator[tui]
+```
+
+### "Permission denied" / "VFIO" Errors
+
+Make sure you're running with sudo using the venv's Python:
+
+```bash
+sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main tui
+```
+
+### "IOMMU not available"
+
+1. Check that IOMMU is enabled in your BIOS (often called "VT-d" for Intel or "AMD-Vi" for AMD)
+2. Verify kernel parameters: `cat /proc/cmdline` should show `intel_iommu=on` or `amd_iommu=on`
+3. Check dmesg: `dmesg | grep -i iommu`
+
+### "Device not found" / "No VFIO group"
+
+1. List your devices: `lspci -Dnn`
+2. Check IOMMU groups: `find /sys/kernel/iommu_groups/ -type l`
+3. Run interactive diagnostics: `pcileech-sudo check --device 0000:XX:XX.X --interactive`
+
+### Locked IP Cores (Vivado)
+
+If Vivado complains about locked IP cores during synthesis:
+
+1. Make sure you have Vivado WebPACK or a valid license
+2. The TCL scripts attempt to unlock IPs automatically
+3. You may need to regenerate IP cores: `reset_target all [get_ips]` in Vivado
+
+For detailed troubleshooting, see the [Troubleshooting Guide](troubleshooting.md).
+
+---
+
+## Alternative Installation Methods
+
+### From Source (Development)
+
+```bash
+git clone --recurse-submodules https://github.com/voltcyclone/PCILeechFWGenerator.git
+cd PCILeechFWGenerator
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[tui]"
+```
+
+### Using pipx
+
+```bash
+sudo apt install pipx
+pipx ensurepath
+pipx install 'pcileechfwgenerator[tui]'
+sudo $(which pcileech) tui
+```
+
+---
+
+## Next Steps
+
+- **[Quick Start Guide](quick-start.md)** - Generate your first firmware
+- **[Host-Container Pipeline](host-container-pipeline.md)** - Understand the 3-stage build process
+- **[Troubleshooting](troubleshooting.md)** - Fix common issues

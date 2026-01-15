@@ -2,58 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/config-space-shadow/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/container-builds/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/development/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/device-cloning/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/device-specific-bar-implementation/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/dynamic-device-capabilities/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/firmware-uniqueness/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/host-container-pipeline/</loc>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/installation-python312/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/installation/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/manual-donor-dump/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/no-fallback-policy/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/post-build-validation/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/quick-start/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/repository-discovery-flow/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/supported-devices/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/template-architecture/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/troubleshooting-permissions/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/troubleshooting/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
     </url>
     <url>
          <loc>https://pcileechfwgenerator.pages.dev/tui-readme/</loc>
-         <lastmod>2025-08-10</lastmod>
+         <lastmod>2026-01-15</lastmod>
+    </url>
+    <url>
+         <loc>https://pcileechfwgenerator.pages.dev/development/bar-sampling/</loc>
+         <lastmod>2026-01-15</lastmod>
     </url>
 </urlset>

@@ -63,9 +63,9 @@ The TUI provides an interactive, user-friendly interface that addresses the key 
 
 ### Prerequisites
 
-- Python 3.9 or higher
+- Python 3.11 or higher
 - Root/sudo access (required for device binding)
-- Podman container runtime
+- Podman container runtime (optional, for Stage 2 templating)
 - PCILeech firmware generation environment
 
 ### Install TUI Dependencies
@@ -85,18 +85,20 @@ pip install textual rich psutil watchdog pydantic
 There are several ways to launch the TUI:
 
 ```bash
-# Method 1: Using the unified entrypoint (recommended)
+# Method 1: Using the installed package with alias (recommended)
+pcileech-sudo tui
+
+# Method 2: Using the installed package directly
+sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main tui
+
+# Method 3: Development from repository
 sudo python3 pcileech.py tui
 
-# Method 2: Direct execution 
+# Method 4: Direct module execution (development)
 sudo python3 -m src.tui.main
-
-# Method 3: Using the sudo wrapper (if installed)
-./install-sudo-wrapper.sh  # Install the wrapper first (one-time setup)
-pcileech-tui-sudo
 ```
 
-> **Note**: UI operations require root privileges. The sudo wrapper script preserves the Python environment when running with sudo, preventing module import errors.
+> **Note**: TUI operations require root privileges for VFIO device access. The `pcileech-sudo` alias preserves the Python environment when running with sudo, preventing module import errors.
 
 ### TUI Interface Overview
 
@@ -256,7 +258,8 @@ The TUI provides intelligent error analysis and guidance:
 #### Insufficient Permissions
 - **Cause**: Not running with root privileges
 - **Solutions**:
-  - Run with sudo: `sudo python3 pcileech.py tui`
+  - Run with sudo: `pcileech-sudo tui` (installed package)
+  - Or: `sudo python3 pcileech.py tui` (development from repository)
   - Add user to required groups
 
 ## 🚀 Advanced Features
@@ -355,7 +358,7 @@ The TUI continuously monitors:
 
 2. **Check Python Version**:
    ```bash
-   python3 --version  # Should be 3.8+
+   python3 --version  # Should be 3.11+
    ```
 
 3. **Check Terminal Compatibility**:
@@ -366,15 +369,17 @@ The TUI continuously monitors:
 
 1. **Run as Root**:
    ```bash
-   # Using the sudo wrapper (recommended)
-   ./install-sudo-wrapper.sh  # Install the wrapper first
-   pcileech-tui-sudo
+   # Using the installed package with alias (recommended)
+   pcileech-sudo tui
    
-   # Or directly with sudo
+   # Or directly with installed package
+   sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main tui
+   
+   # Or from repository (development)
    sudo python3 pcileech.py tui
    ```
    
-   > **Note**: When running with sudo, you might encounter the error `ModuleNotFoundError: No module named 'src'`. This happens because sudo changes the Python module search path. Use the provided sudo wrapper script to avoid this issue.
+   > **Note**: When running with sudo, ensure you're using the venv's Python (for installed packages) to avoid `ModuleNotFoundError: No module named 'src'` errors. The `pcileech-sudo` alias handles this automatically.
 
 2. **Check lspci**:
    ```bash

@@ -2205,9 +2205,9 @@
 <h2 id="installation">🚀 Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
-<li>Python 3.9 or higher</li>
+<li>Python 3.11 or higher</li>
 <li>Root/sudo access (required for device binding)</li>
-<li>Podman container runtime</li>
+<li>Podman container runtime (optional, for Stage 2 templating)</li>
 <li>PCILeech firmware generation environment</li>
 </ul>
 <h3 id="install-tui-dependencies">Install TUI Dependencies</h3>
@@ -2220,18 +2220,20 @@
 <h2 id="usage">🎮 Usage</h2>
 <h3 id="launch-tui-mode">Launch TUI Mode</h3>
 <p>There are several ways to launch the TUI:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Method 1: Using the unified entrypoint (recommended)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>python3<span class="w"> </span>pcileech.py<span class="w"> </span>tui
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Method 1: Using the installed package with alias (recommended)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pcileech-sudo<span class="w"> </span>tui
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Method 2: Direct execution </span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>src.tui.main
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Method 2: Using the installed package directly</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>~/.pcileech-venv/bin/python3<span class="w"> </span>-m<span class="w"> </span>pcileechfwgenerator.pcileech_main<span class="w"> </span>tui
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Method 3: Using the sudo wrapper (if installed)</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>./install-sudo-wrapper.sh<span class="w">  </span><span class="c1"># Install the wrapper first (one-time setup)</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>pcileech-tui-sudo
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Method 3: Development from repository</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>sudo<span class="w"> </span>python3<span class="w"> </span>pcileech.py<span class="w"> </span>tui
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Method 4: Direct module execution (development)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>sudo<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>src.tui.main
 </code></pre></div>
 <blockquote>
-<p><strong>Note</strong>: UI operations require root privileges. The sudo wrapper script preserves the Python environment when running with sudo, preventing module import errors.</p>
+<p><strong>Note</strong>: TUI operations require root privileges for VFIO device access. The <code>pcileech-sudo</code> alias preserves the Python environment when running with sudo, preventing module import errors.</p>
 </blockquote>
 <h3 id="tui-interface-overview">TUI Interface Overview</h3>
 <p>The TUI is organized into several panels:</p>
@@ -2383,7 +2385,8 @@
 <ul>
 <li><strong>Cause</strong>: Not running with root privileges</li>
 <li><strong>Solutions</strong>:</li>
-<li>Run with sudo: <code>sudo python3 pcileech.py tui</code></li>
+<li>Run with sudo: <code>pcileech-sudo tui</code> (installed package)</li>
+<li>Or: <code>sudo python3 pcileech.py tui</code> (development from repository)</li>
 <li>Add user to required groups</li>
 </ul>
 <h2 id="advanced-features">🚀 Advanced Features</h2>
@@ -2471,7 +2474,7 @@
 </li>
 <li>
 <p><strong>Check Python Version</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python3<span class="w"> </span>--version<span class="w">  </span><span class="c1"># Should be 3.8+</span>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python3<span class="w"> </span>--version<span class="w">  </span><span class="c1"># Should be 3.11+</span>
 </code></pre></div></p>
 </li>
 <li>
@@ -2483,16 +2486,18 @@
 <h3 id="device-detection-issues">Device Detection Issues</h3>
 <ol>
 <li><strong>Run as Root</strong>:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Using the sudo wrapper (recommended)</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./install-sudo-wrapper.sh<span class="w">  </span><span class="c1"># Install the wrapper first</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>pcileech-tui-sudo
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># Or directly with sudo</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>sudo<span class="w"> </span>python3<span class="w"> </span>pcileech.py<span class="w"> </span>tui
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Using the installed package with alias (recommended)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>pcileech-sudo<span class="w"> </span>tui
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Or directly with installed package</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>sudo<span class="w"> </span>~/.pcileech-venv/bin/python3<span class="w"> </span>-m<span class="w"> </span>pcileechfwgenerator.pcileech_main<span class="w"> </span>tui
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Or from repository (development)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>sudo<span class="w"> </span>python3<span class="w"> </span>pcileech.py<span class="w"> </span>tui
 </code></pre></div></li>
 </ol>
 <blockquote>
-<p><strong>Note</strong>: When running with sudo, you might encounter the error <code>ModuleNotFoundError: No module named 'src'</code>. This happens because sudo changes the Python module search path. Use the provided sudo wrapper script to avoid this issue.</p>
+<p><strong>Note</strong>: When running with sudo, ensure you're using the venv's Python (for installed packages) to avoid <code>ModuleNotFoundError: No module named 'src'</code> errors. The <code>pcileech-sudo</code> alias handles this automatically.</p>
 </blockquote>
 <ol>
 <li>
@@ -2605,11 +2610,12 @@
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
       
+        <a href="mailto:not.committed.yet">Not Committed Yet</a>, 
         <a href="mailto:ramseymcgrath@gmail.com">Ramsey McGrath</a>
     </nav>
   </span>
@@ -2698,6 +2704,8 @@
     
     
       <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../javascripts/datadog-rum.js"></script>
       
     
   </body>

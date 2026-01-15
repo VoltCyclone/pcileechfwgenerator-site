@@ -1,6 +1,6 @@
 # 🛠️ Development Guide
 
-The code needs to run on linux but can be developed anywhere with a python vers >3.9
+The code needs to run on Linux but can be developed anywhere with Python version >= 3.11
 
 ```bash
 # Clone repository

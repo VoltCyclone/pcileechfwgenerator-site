@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="/installation/">
+        <link rel="canonical" href="https://pcileechfwgenerator.pages.dev/installation/">
       
       
         <link rel="prev" href="..">
@@ -489,22 +489,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="System Requirements">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Install the Package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Install the Package">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#operating-system" class="md-nav__link">
+  <a href="#on-ubuntu-2204-debian-12-modern-linux" class="md-nav__link">
     <span class="md-ellipsis">
-      Operating System
+      On Ubuntu 22.04+ / Debian 12+ / Modern Linux
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hardware-requirements" class="md-nav__link">
+  <a href="#running-with-root-access-required-for-vfio" class="md-nav__link">
     <span class="md-ellipsis">
-      Hardware Requirements
+      Running with Root Access (Required for VFIO)
     </span>
   </a>
   
@@ -516,37 +525,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation-methods" class="md-nav__link">
+  <a href="#step-2-enable-iommu" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation Methods
+      Step 2: Enable IOMMU
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Installation Methods">
+    <nav class="md-nav" aria-label="Step 2: Enable IOMMU">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#method-1-install-from-pypi-recommended" class="md-nav__link">
+  <a href="#21-edit-grub-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 1: Install from PyPI (Recommended)
+      2.1 Edit GRUB Configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#method-2-install-from-source" class="md-nav__link">
+  <a href="#22-update-grub-and-reboot" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 2: Install from Source
+      2.2 Update GRUB and Reboot
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#method-3-using-dockerpodman" class="md-nav__link">
+  <a href="#23-verify-iommu-is-active" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 3: Using Docker/Podman
+      2.3 Verify IOMMU is Active
     </span>
   </a>
   
@@ -558,37 +567,64 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vfio-setup" class="md-nav__link">
+  <a href="#step-3-load-vfio-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      VFIO Setup
+      Step 3: Load VFIO Modules
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="VFIO Setup">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-verify-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Verify Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-first-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: First Build
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-vivado-for-fpga-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Vivado for FPGA Synthesis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional: Vivado for FPGA Synthesis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-enable-iommu" class="md-nav__link">
+  <a href="#install-vivado-webpack-free" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Enable IOMMU
+      Install Vivado WebPACK (Free)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-load-vfio-modules" class="md-nav__link">
+  <a href="#configure-vivado-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Load VFIO Modules
+      Configure Vivado Environment
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-bind-device-to-vfio" class="md-nav__link">
+  <a href="#use-vivado-with-pcileech" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Bind Device to VFIO
+      Use Vivado with PCILeech
     </span>
   </a>
   
@@ -600,84 +636,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#xilinx-vivado-setup-optional" class="md-nav__link">
+  <a href="#optional-container-mode-podman" class="md-nav__link">
     <span class="md-ellipsis">
-      Xilinx Vivado Setup (Optional)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Xilinx Vivado Setup (Optional)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-download-vivado" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Download Vivado
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-install-vivado" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Install Vivado
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-setup-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Setup Environment
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usb-jtag-driver-setup-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      USB-JTAG Driver Setup (Optional)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="USB-JTAG Driver Setup (Optional)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-install-cable-drivers" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Install Cable Drivers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-setup-udev-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Setup udev Rules
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verification
+      Optional: Container Mode (Podman)
     </span>
   </a>
   
@@ -694,19 +655,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
+  <a href="#externally-managed-environment-error" class="md-nav__link">
     <span class="md-ellipsis">
-      Common Issues
+      "externally-managed-environment" Error
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Common Issues">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#permission-denied" class="md-nav__link">
+  <a href="#modulenotfounderror-no-module-named-textual" class="md-nav__link">
     <span class="md-ellipsis">
-      Permission Denied
+      "ModuleNotFoundError: No module named 'textual'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-vfio-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Permission denied" / "VFIO" Errors
     </span>
   </a>
   
@@ -715,25 +684,25 @@
           <li class="md-nav__item">
   <a href="#iommu-not-available" class="md-nav__link">
     <span class="md-ellipsis">
-      IOMMU Not Available
+      "IOMMU not available"
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#device-not-found" class="md-nav__link">
+  <a href="#device-not-found-no-vfio-group" class="md-nav__link">
     <span class="md-ellipsis">
-      Device Not Found
+      "Device not found" / "No VFIO group"
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vivado-not-found" class="md-nav__link">
+  <a href="#locked-ip-cores-vivado" class="md-nav__link">
     <span class="md-ellipsis">
-      Vivado Not Found
+      Locked IP Cores (Vivado)
     </span>
   </a>
   
@@ -743,11 +712,30 @@
     </nav>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternative Installation Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternative Installation Methods">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-help" class="md-nav__link">
+  <a href="#from-source-development" class="md-nav__link">
     <span class="md-ellipsis">
-      Getting Help
+      From Source (Development)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-pipx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using pipx
     </span>
   </a>
   
@@ -1401,22 +1389,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="System Requirements">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-install-the-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Install the Package
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Install the Package">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#operating-system" class="md-nav__link">
+  <a href="#on-ubuntu-2204-debian-12-modern-linux" class="md-nav__link">
     <span class="md-ellipsis">
-      Operating System
+      On Ubuntu 22.04+ / Debian 12+ / Modern Linux
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hardware-requirements" class="md-nav__link">
+  <a href="#running-with-root-access-required-for-vfio" class="md-nav__link">
     <span class="md-ellipsis">
-      Hardware Requirements
+      Running with Root Access (Required for VFIO)
     </span>
   </a>
   
@@ -1428,37 +1425,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation-methods" class="md-nav__link">
+  <a href="#step-2-enable-iommu" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation Methods
+      Step 2: Enable IOMMU
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Installation Methods">
+    <nav class="md-nav" aria-label="Step 2: Enable IOMMU">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#method-1-install-from-pypi-recommended" class="md-nav__link">
+  <a href="#21-edit-grub-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 1: Install from PyPI (Recommended)
+      2.1 Edit GRUB Configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#method-2-install-from-source" class="md-nav__link">
+  <a href="#22-update-grub-and-reboot" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 2: Install from Source
+      2.2 Update GRUB and Reboot
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#method-3-using-dockerpodman" class="md-nav__link">
+  <a href="#23-verify-iommu-is-active" class="md-nav__link">
     <span class="md-ellipsis">
-      Method 3: Using Docker/Podman
+      2.3 Verify IOMMU is Active
     </span>
   </a>
   
@@ -1470,37 +1467,64 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#vfio-setup" class="md-nav__link">
+  <a href="#step-3-load-vfio-modules" class="md-nav__link">
     <span class="md-ellipsis">
-      VFIO Setup
+      Step 3: Load VFIO Modules
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="VFIO Setup">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-verify-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Verify Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-first-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: First Build
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-vivado-for-fpga-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optional: Vivado for FPGA Synthesis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional: Vivado for FPGA Synthesis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-enable-iommu" class="md-nav__link">
+  <a href="#install-vivado-webpack-free" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Enable IOMMU
+      Install Vivado WebPACK (Free)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-load-vfio-modules" class="md-nav__link">
+  <a href="#configure-vivado-environment" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Load VFIO Modules
+      Configure Vivado Environment
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-bind-device-to-vfio" class="md-nav__link">
+  <a href="#use-vivado-with-pcileech" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Bind Device to VFIO
+      Use Vivado with PCILeech
     </span>
   </a>
   
@@ -1512,84 +1536,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#xilinx-vivado-setup-optional" class="md-nav__link">
+  <a href="#optional-container-mode-podman" class="md-nav__link">
     <span class="md-ellipsis">
-      Xilinx Vivado Setup (Optional)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Xilinx Vivado Setup (Optional)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-download-vivado" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Download Vivado
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-install-vivado" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Install Vivado
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-setup-environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Setup Environment
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usb-jtag-driver-setup-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      USB-JTAG Driver Setup (Optional)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="USB-JTAG Driver Setup (Optional)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-install-cable-drivers" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Install Cable Drivers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-setup-udev-rules" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Setup udev Rules
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verification
+      Optional: Container Mode (Podman)
     </span>
   </a>
   
@@ -1606,19 +1555,27 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#common-issues" class="md-nav__link">
+  <a href="#externally-managed-environment-error" class="md-nav__link">
     <span class="md-ellipsis">
-      Common Issues
+      "externally-managed-environment" Error
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Common Issues">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#permission-denied" class="md-nav__link">
+  <a href="#modulenotfounderror-no-module-named-textual" class="md-nav__link">
     <span class="md-ellipsis">
-      Permission Denied
+      "ModuleNotFoundError: No module named 'textual'"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-vfio-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Permission denied" / "VFIO" Errors
     </span>
   </a>
   
@@ -1627,25 +1584,25 @@
           <li class="md-nav__item">
   <a href="#iommu-not-available" class="md-nav__link">
     <span class="md-ellipsis">
-      IOMMU Not Available
+      "IOMMU not available"
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#device-not-found" class="md-nav__link">
+  <a href="#device-not-found-no-vfio-group" class="md-nav__link">
     <span class="md-ellipsis">
-      Device Not Found
+      "Device not found" / "No VFIO group"
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#vivado-not-found" class="md-nav__link">
+  <a href="#locked-ip-cores-vivado" class="md-nav__link">
     <span class="md-ellipsis">
-      Vivado Not Found
+      Locked IP Cores (Vivado)
     </span>
   </a>
   
@@ -1655,11 +1612,30 @@
     </nav>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#alternative-installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternative Installation Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternative Installation Methods">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#getting-help" class="md-nav__link">
+  <a href="#from-source-development" class="md-nav__link">
     <span class="md-ellipsis">
-      Getting Help
+      From Source (Development)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-pipx" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using pipx
     </span>
   </a>
   
@@ -1712,200 +1688,202 @@
 
 
 <h1 id="installation-guide">Installation Guide</h1>
-<p>This guide will walk you through installing the PCILeech Firmware Generator on your system.</p>
+<p>This is the <strong>one definitive guide</strong> for installing PCILeech Firmware Generator. Follow these steps in order.</p>
 <h2 id="system-requirements">System Requirements</h2>
-<h3 id="operating-system">Operating System</h3>
-<ul>
-<li><strong>Linux</strong>: Ubuntu 20.04+ (recommended), Debian 11+, RHEL 8+, or similar</li>
-<li><strong>Python</strong>: 3.8 or higher</li>
-<li><strong>Memory</strong>: 4GB RAM minimum, 8GB recommended for complex devices</li>
-<li><strong>Storage</strong>: 2GB free space for FPGA tools and generated firmware</li>
-</ul>
-<h3 id="hardware-requirements">Hardware Requirements</h3>
-<ul>
-<li><strong>FPGA Development Board</strong>: Supported Xilinx board (see <a href="../supported-devices/">Supported Devices</a>)</li>
-<li><strong>Donor PCIe Device</strong>: Any standard PCIe device for configuration extraction</li>
-<li><strong>USB-JTAG Programmer</strong>: For optional FPGA programming (Xilinx Platform Cable or compatible)</li>
-</ul>
-<h2 id="installation-methods">Installation Methods</h2>
-<h3 id="method-1-install-from-pypi-recommended">Method 1: Install from PyPI (Recommended)</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Install the latest stable release</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>pcileech-fw-generator
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Operating System</strong></td>
+<td>Linux only (Ubuntu 22.04+ recommended)</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>3.11 or higher</td>
+</tr>
+<tr>
+<td><strong>RAM</strong></td>
+<td>4GB minimum, 8GB recommended</td>
+</tr>
+<tr>
+<td><strong>Disk</strong></td>
+<td>2GB free space</td>
+</tr>
+<tr>
+<td><strong>Hardware</strong></td>
+<td>Any PCIe device as donor (cheap NICs work great)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-1-install-the-package">Step 1: Install the Package</h2>
+<h3 id="on-ubuntu-2204-debian-12-modern-linux">On Ubuntu 22.04+ / Debian 12+ / Modern Linux</h3>
+<p>Modern Linux distributions protect system Python. You <strong>must</strong> use a virtual environment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Create virtual environment</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>~/.pcileech-venv
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Verify installation</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>pcileech-generate<span class="w"> </span>--version
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Activate it</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">source</span><span class="w"> </span>~/.pcileech-venv/bin/activate
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Install with TUI support (recommended)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>pip<span class="w"> </span>install<span class="w"> </span>pcileechfwgenerator<span class="o">[</span>tui<span class="o">]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Verify it works</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>pcileech<span class="w"> </span>version
 </code></pre></div>
-<h3 id="method-2-install-from-source">Method 2: Install from Source</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Clone the repository</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ramseymcgrath/PCILeechFWGenerator.git
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">cd</span><span class="w"> </span>PCILeechFWGenerator
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Create virtual environment (recommended)</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># On Windows: venv\Scripts\activate</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Install in development mode</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># Or install normally</span>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>pip<span class="w"> </span>install<span class="w"> </span>.
+<div class="admonition warning">
+<p class="admonition-title">Don't skip the virtual environment</p>
+<p>Running <code>pip install pcileechfwgenerator</code> directly <strong>will fail</strong> on modern systems with an <code>externally-managed-environment</code> error. Always use a venv.</p>
+</div>
+<h3 id="running-with-root-access-required-for-vfio">Running with Root Access (Required for VFIO)</h3>
+<p>Since VFIO requires root, you must use the venv's Python directly with sudo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># This is the correct way to run with sudo:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>~/.pcileech-venv/bin/python3<span class="w"> </span>-m<span class="w"> </span>pcileechfwgenerator.pcileech_main<span class="w"> </span>tui
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Add this alias to your ~/.bashrc for convenience:</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;alias pcileech-sudo=&#39;sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main&#39;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Then you can simply run:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>pcileech-sudo<span class="w"> </span>tui
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>pcileech-sudo<span class="w"> </span>build<span class="w"> </span>--bdf<span class="w"> </span><span class="m">0000</span>:03:00.0<span class="w"> </span>--board<span class="w"> </span>pcileech_35t325_x1
 </code></pre></div>
-<h3 id="method-3-using-dockerpodman">Method 3: Using Docker/Podman</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Pull the container image</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Run with current directory mounted</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/workspace<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span>-v<span class="w"> </span>/dev:/dev<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span>--privileged<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span>ghcr.io/ramseymcgrath/pcileechfwgenerator:latest
+<h2 id="step-2-enable-iommu">Step 2: Enable IOMMU</h2>
+<p>IOMMU must be enabled in your BIOS and kernel for VFIO to work.</p>
+<h3 id="21-edit-grub-configuration">2.1 Edit GRUB Configuration</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/default/grub
 </code></pre></div>
-<h2 id="vfio-setup">VFIO Setup</h2>
-<p>The generator requires VFIO drivers to access donor devices. Here's how to set them up:</p>
-<h3 id="1-enable-iommu">1. Enable IOMMU</h3>
-<p>Add to your kernel command line (usually in <code>/etc/default/grub</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># For Intel CPUs</span>
+<p>Find the line starting with <code>GRUB_CMDLINE_LINUX</code> and add IOMMU parameters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># For Intel CPUs:</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;intel_iommu=on iommu=pt&quot;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># For AMD CPUs</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># For AMD CPUs:</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">GRUB_CMDLINE_LINUX</span><span class="o">=</span><span class="s2">&quot;amd_iommu=on iommu=pt&quot;</span>
 </code></pre></div>
-<p>Update GRUB and reboot:</p>
+<h3 id="22-update-grub-and-reboot">2.2 Update GRUB and Reboot</h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>update-grub
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>reboot
 </code></pre></div>
-<h3 id="2-load-vfio-modules">2. Load VFIO Modules</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Load required modules</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>modprobe<span class="w"> </span>vfio-pci
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo<span class="w"> </span>modprobe<span class="w"> </span>vfio-iommu-type1
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Make persistent (add to /etc/modules)</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vfio-pci&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/modules
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vfio-iommu-type1&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/modules
+<h3 id="23-verify-iommu-is-active">2.3 Verify IOMMU is Active</h3>
+<p>After reboot:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>iommu
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Should show IOMMU enabled messages</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>cat<span class="w"> </span>/proc/cmdline
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Should include intel_iommu=on or amd_iommu=on</span>
 </code></pre></div>
-<h3 id="3-bind-device-to-vfio">3. Bind Device to VFIO</h3>
-<p>Find your device:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># List PCIe devices</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>lspci<span class="w"> </span>-nn
+<h2 id="step-3-load-vfio-modules">Step 3: Load VFIO Modules</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Load modules now</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>modprobe<span class="w"> </span>vfio<span class="w"> </span>vfio-pci
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Example output:</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># 01:00.0 Ethernet controller [0200]: Intel Corporation 82599ES [8086:10fb]</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Make them load on boot</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vfio&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/modules
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;vfio-pci&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/modules
 </code></pre></div>
-<p>Bind to VFIO:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Replace with your device ID and vendor:device codes</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;8086 10fb&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/sys/bus/pci/drivers/vfio-pci/new_id
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;0000:01:00.0&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/sys/bus/pci/devices/0000:01:00.0/driver/unbind
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;0000:01:00.0&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/sys/bus/pci/drivers/vfio-pci/bind
+<h2 id="step-4-verify-installation">Step 4: Verify Installation</h2>
+<p>Run the built-in diagnostics:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Check overall system readiness</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>pcileech-sudo<span class="w"> </span>check
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Check a specific device (replace with your device&#39;s BDF)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>pcileech-sudo<span class="w"> </span>check<span class="w"> </span>--device<span class="w"> </span><span class="m">0000</span>:03:00.0<span class="w"> </span>--interactive
 </code></pre></div>
-<h2 id="xilinx-vivado-setup-optional">Xilinx Vivado Setup (Optional)</h2>
-<p>For FPGA synthesis and programming, install Xilinx Vivado:</p>
-<h3 id="1-download-vivado">1. Download Vivado</h3>
-<ul>
-<li>Visit <a href="https://www.xilinx.com/support/download.html">Xilinx Downloads</a></li>
-<li>Download Vivado ML Edition (2020.1 or later)</li>
-<li>Choose WebPACK (free) or Standard/Enterprise edition</li>
-</ul>
-<h3 id="2-install-vivado">2. Install Vivado</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Extract and run installer</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>tar<span class="w"> </span>-xvf<span class="w"> </span>Xilinx_Unified_*.tar.gz
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">cd</span><span class="w"> </span>Xilinx_Unified_*/
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>./xsetup
+<h2 id="step-5-first-build">Step 5: First Build</h2>
+<p>You're ready to generate firmware!</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Launch the interactive TUI (recommended for first-time users)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pcileech-sudo<span class="w"> </span>tui
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Or use CLI directly</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>pcileech-sudo<span class="w"> </span>build<span class="w"> </span>--bdf<span class="w"> </span><span class="m">0000</span>:03:00.0<span class="w"> </span>--board<span class="w"> </span>pcileech_35t325_x1
 </code></pre></div>
-<h3 id="3-setup-environment">3. Setup Environment</h3>
-<p>Add to your <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Xilinx Vivado</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">source</span><span class="w"> </span>/opt/Xilinx/Vivado/2023.1/settings64.sh<span class="w">  </span><span class="c1"># Adjust version</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/opt/Xilinx/Vivado/2023.1/bin
-</code></pre></div>
-<h2 id="usb-jtag-driver-setup-optional">USB-JTAG Driver Setup (Optional)</h2>
-<p>For programming FPGAs via USB-JTAG:</p>
-<h3 id="1-install-cable-drivers">1. Install Cable Drivers</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># For Xilinx Platform Cable</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">cd</span><span class="w"> </span>/opt/Xilinx/Vivado/2023.1/data/xicom/cable_drivers/lin64/install_script/install_drivers
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sudo<span class="w"> </span>./install_drivers
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># For Digilent cables</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>wget<span class="w"> </span>https://github.com/Digilent/digilent.adept.runtime/releases/download/v2.27.9/digilent.adept.runtime_2.27.9-amd64.deb
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>digilent.adept.runtime_2.27.9-amd64.deb
-</code></pre></div>
-<h3 id="2-setup-udev-rules">2. Setup udev Rules</h3>
-<p>Create <code>/etc/udev/rules.d/52-xilinx-ftdi-usb.rules</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Xilinx USB cables</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;usb&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>idVendor<span class="o">}==</span><span class="s2">&quot;0403&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>idProduct<span class="o">}==</span><span class="s2">&quot;6010&quot;</span>,<span class="w"> </span><span class="nv">GROUP</span><span class="o">=</span><span class="s2">&quot;plugdev&quot;</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;usb&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>idVendor<span class="o">}==</span><span class="s2">&quot;0403&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>idProduct<span class="o">}==</span><span class="s2">&quot;6014&quot;</span>,<span class="w"> </span><span class="nv">GROUP</span><span class="o">=</span><span class="s2">&quot;plugdev&quot;</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># Digilent cables</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nv">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;usb&quot;</span>,<span class="w"> </span>ATTRS<span class="o">{</span>idVendor<span class="o">}==</span><span class="s2">&quot;1443&quot;</span>,<span class="w"> </span><span class="nv">GROUP</span><span class="o">=</span><span class="s2">&quot;plugdev&quot;</span>
-</code></pre></div>
-<p>Reload udev rules:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload-rules
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>sudo<span class="w"> </span>udevadm<span class="w"> </span>trigger
-</code></pre></div>
-<h2 id="verification">Verification</h2>
-<p>Verify your installation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Check basic installation</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>pcileech-generate<span class="w"> </span>--help
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Check VFIO access (requires bound device)</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>pcileech-generate<span class="w"> </span>--list-devices
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Check Vivado integration (if installed)</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>pcileech-generate<span class="w"> </span>--check-tools
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1"># Run self-test</span>
-<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>pcileech-generate<span class="w"> </span>--self-test
-</code></pre></div>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="common-issues">Common Issues</h3>
-<h4 id="permission-denied">Permission Denied</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Add user to vfio group</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>vfio<span class="w"> </span><span class="nv">$USER</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Add user to plugdev group (for USB-JTAG)</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>plugdev<span class="w"> </span><span class="nv">$USER</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># Logout and login again</span>
-</code></pre></div>
-<h4 id="iommu-not-available">IOMMU Not Available</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Check IOMMU status</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>iommu
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Verify kernel command line</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>cat<span class="w"> </span>/proc/cmdline
-</code></pre></div>
-<h4 id="device-not-found">Device Not Found</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Check device binding</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>/sys/bus/pci/drivers/vfio-pci/
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Check IOMMU groups</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>find<span class="w"> </span>/sys/kernel/iommu_groups/<span class="w"> </span>-type<span class="w"> </span>l
-</code></pre></div>
-<h4 id="vivado-not-found">Vivado Not Found</h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Check Vivado installation</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>which<span class="w"> </span>vivado
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Source Vivado settings</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="nb">source</span><span class="w"> </span>/opt/Xilinx/Vivado/*/settings64.sh
-</code></pre></div>
-<h3 id="getting-help">Getting Help</h3>
-<p>If you encounter issues:</p>
-<ol>
-<li>Check the <a href="../troubleshooting/">Troubleshooting Guide</a></li>
-<li>Review the <a href="https://github.com/ramseymcgrath/PCILeechFWGenerator/wiki/FAQ">FAQ</a></li>
-<li>Search existing <a href="https://github.com/ramseymcgrath/PCILeechFWGenerator/issues">GitHub Issues</a></li>
-<li>Join our <a href="https://discord.gg/your-server">Discord Community</a></li>
-<li>Create a new issue with detailed logs and system information</li>
-</ol>
-<h2 id="next-steps">Next Steps</h2>
-<p>Once installation is complete:</p>
-<ol>
-<li><strong><a href="../quick-start/">Quick Start Guide</a></strong>: Generate your first firmware</li>
-<li><strong><a href="../device-cloning/">Device Cloning</a></strong>: Learn about device extraction</li>
-<li><strong><a href="../development/">Development Guide</a></strong>: Contributing to the project</li>
-</ol>
+<p>See the <a href="../quick-start/">Quick Start Guide</a> for detailed usage instructions.</p>
 <hr />
-<p><strong>Ready to generate firmware?</strong> Continue to the <a href="../quick-start/">Quick Start Guide</a>!</p>
+<h2 id="optional-vivado-for-fpga-synthesis">Optional: Vivado for FPGA Synthesis</h2>
+<p>Vivado is only needed if you want to synthesize the generated firmware into a bitstream. The generator can produce all SystemVerilog and TCL files without Vivado.</p>
+<h3 id="install-vivado-webpack-free">Install Vivado WebPACK (Free)</h3>
+<ol>
+<li>Download from <a href="https://www.xilinx.com/support/download.html">Xilinx Downloads</a></li>
+<li>Choose "Vivado ML Edition" → WebPACK (free, no license required)</li>
+<li>Run installer: <code>sudo ./xsetup</code></li>
+</ol>
+<h3 id="configure-vivado-environment">Configure Vivado Environment</h3>
+<p>Add to <code>~/.bashrc</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">source</span><span class="w"> </span>/opt/Xilinx/Vivado/2023.1/settings64.sh<span class="w">  </span><span class="c1"># Adjust version</span>
+</code></pre></div>
+<h3 id="use-vivado-with-pcileech">Use Vivado with PCILeech</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>pcileech-sudo<span class="w"> </span>build<span class="w"> </span>--bdf<span class="w"> </span><span class="m">0000</span>:03:00.0<span class="w"> </span>--board<span class="w"> </span>pcileech_35t325_x1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>--vivado-path<span class="w"> </span>/opt/Xilinx/Vivado/2023.1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span>--vivado-jobs<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<hr />
+<h2 id="optional-container-mode-podman">Optional: Container Mode (Podman)</h2>
+<p>Container mode provides isolated, reproducible builds for Stage 2 (templating). The container does NOT access VFIO - all hardware access happens on the host in Stage 1.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Install Podman</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>podman
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Container is built automatically on first use</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># No additional configuration needed</span>
+</code></pre></div>
+<p>When you run a build, you'll be prompted to choose container or local mode. Set <code>PCILEECH_AUTO_CONTAINER=1</code> to auto-select container mode.</p>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="externally-managed-environment-error">"externally-managed-environment" Error</h3>
+<p>You're trying to install without a virtual environment. Go back to Step 1 and create a venv.</p>
+<h3 id="modulenotfounderror-no-module-named-textual">"ModuleNotFoundError: No module named 'textual'"</h3>
+<p>You installed without TUI support. Reinstall with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">source</span><span class="w"> </span>~/.pcileech-venv/bin/activate
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>pip<span class="w"> </span>install<span class="w"> </span>pcileechfwgenerator<span class="o">[</span>tui<span class="o">]</span>
+</code></pre></div>
+<h3 id="permission-denied-vfio-errors">"Permission denied" / "VFIO" Errors</h3>
+<p>Make sure you're running with sudo using the venv's Python:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>~/.pcileech-venv/bin/python3<span class="w"> </span>-m<span class="w"> </span>pcileechfwgenerator.pcileech_main<span class="w"> </span>tui
+</code></pre></div>
+<h3 id="iommu-not-available">"IOMMU not available"</h3>
+<ol>
+<li>Check that IOMMU is enabled in your BIOS (often called "VT-d" for Intel or "AMD-Vi" for AMD)</li>
+<li>Verify kernel parameters: <code>cat /proc/cmdline</code> should show <code>intel_iommu=on</code> or <code>amd_iommu=on</code></li>
+<li>Check dmesg: <code>dmesg | grep -i iommu</code></li>
+</ol>
+<h3 id="device-not-found-no-vfio-group">"Device not found" / "No VFIO group"</h3>
+<ol>
+<li>List your devices: <code>lspci -Dnn</code></li>
+<li>Check IOMMU groups: <code>find /sys/kernel/iommu_groups/ -type l</code></li>
+<li>Run interactive diagnostics: <code>pcileech-sudo check --device 0000:XX:XX.X --interactive</code></li>
+</ol>
+<h3 id="locked-ip-cores-vivado">Locked IP Cores (Vivado)</h3>
+<p>If Vivado complains about locked IP cores during synthesis:</p>
+<ol>
+<li>Make sure you have Vivado WebPACK or a valid license</li>
+<li>The TCL scripts attempt to unlock IPs automatically</li>
+<li>You may need to regenerate IP cores: <code>reset_target all [get_ips]</code> in Vivado</li>
+</ol>
+<p>For detailed troubleshooting, see the <a href="../troubleshooting/">Troubleshooting Guide</a>.</p>
+<hr />
+<h2 id="alternative-installation-methods">Alternative Installation Methods</h2>
+<h3 id="from-source-development">From Source (Development)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>https://github.com/voltcyclone/PCILeechFWGenerator.git
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>PCILeechFWGenerator
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[tui]&quot;</span>
+</code></pre></div>
+<h3 id="using-pipx">Using pipx</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>pipx
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>pipx<span class="w"> </span>ensurepath
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>pipx<span class="w"> </span>install<span class="w"> </span><span class="s1">&#39;pcileechfwgenerator[tui]&#39;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>sudo<span class="w"> </span><span class="k">$(</span>which<span class="w"> </span>pcileech<span class="k">)</span><span class="w"> </span>tui
+</code></pre></div>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><strong><a href="../quick-start/">Quick Start Guide</a></strong> - Generate your first firmware</li>
+<li><strong><a href="../host-container-pipeline/">Host-Container Pipeline</a></strong> - Understand the 3-stage build process</li>
+<li><strong><a href="../troubleshooting/">Troubleshooting</a></strong> - Fix common issues</li>
+</ul>
 
 
 
@@ -1948,11 +1926,12 @@
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.54 5.54 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13zM0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20zm24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9z"/></svg>
       
     </span>
     <nav>
       
+        <a href="mailto:not.committed.yet">Not Committed Yet</a>, 
         <a href="mailto:ramseymcgrath@gmail.com">Ramsey McGrath</a>
     </nav>
   </span>
@@ -2041,6 +2020,8 @@
     
     
       <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      
+        <script src="../javascripts/datadog-rum.js"></script>
       
     
   </body>

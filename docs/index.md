@@ -1,140 +1,113 @@
 # PCILeech Firmware Generator
 
-[![CI](https://github.com/ramseymcgrath/PCILeechFWGenerator/workflows/CI/badge.svg?branch=main)](https://github.com/ramseymcgrath/PCILeechFWGenerator/actions/workflows/ci.yml)
+[![CI](https://github.com/voltcyclone/PCILeechFWGenerator/workflows/CI/badge.svg?branch=main)](https://github.com/voltcyclone/PCILeechFWGenerator/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/ramseymcgrath/PCILeechFWGenerator/graph/badge.svg?token=JVX3C1WL86)](https://codecov.io/gh/ramseymcgrath/PCILeechFWGenerator)
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://github.com/ramseymcgrath/PCILeechFWGenerator)
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/voltcyclone/PCILeechFWGenerator)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE.txt)
 
-!!! info "About PCILeech Firmware Generator"
-    Generate authentic PCIe DMA firmware from real donor hardware with a single command. This tool extracts donor configurations from a local device and generates unique PCILeech FPGA bitstreams (and optionally flashes a DMA card over USB-JTAG).
+Generate authentic PCIe DMA firmware from real donor hardware using a **3-stage host-container-host pipeline**. This tool extracts donor configurations via VFIO and generates unique PCILeech FPGA bitstreams.
+
+!!! warning "Real Hardware Required"
+    This tool requires a real donor PCIe device. Placeholder values are explicitly avoided - your firmware will be unique to your donor hardware.
 
 ## 🚀 Quick Start
 
 ```bash
-# Install the package
-pip install pcileech-fw-generator
+# Create virtual environment (required on modern Linux)
+python3 -m venv ~/.pcileech-venv
+source ~/.pcileech-venv/bin/activate
 
-# Generate firmware from a donor device
-pcileech-generate --device 0000:01:00.0 --board pcileech_100t484_x1
+# Install with TUI support
+pip install pcileechfwgenerator[tui]
 
-# Flash to FPGA (optional)
-pcileech-generate --device 0000:01:00.0 --board pcileech_100t484_x1 --flash
+# Add alias for running with sudo (add to ~/.bashrc)
+alias pcileech-sudo='sudo ~/.pcileech-venv/bin/python3 -m pcileechfwgenerator.pcileech_main'
+
+# Load VFIO modules
+sudo modprobe vfio vfio-pci
+
+# Launch interactive TUI
+pcileech-sudo tui
+
+# Or use CLI directly
+pcileech-sudo build --bdf 0000:03:00.0 --board pcileech_35t325_x1
 ```
+
+For complete setup including IOMMU configuration, see the **[Installation Guide](installation.md)**.
+
+## 🔄 3-Stage Build Pipeline
+
+PCILeech uses a host → container → host pipeline:
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Stage 1       │    │   Stage 2       │    │   Stage 3       │
+│   HOST          │───▶│   CONTAINER     │───▶│   HOST          │
+│                 │    │   (or local)    │    │                 │
+│ VFIO Collection │    │ Templating      │    │ Vivado Synth    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+     Requires              No VFIO              Requires
+     hardware              access               Vivado
+```
+
+1. **Stage 1 (Host)**: Collects PCIe device data via VFIO
+2. **Stage 2 (Container or Local)**: Generates firmware from collected data
+3. **Stage 3 (Host)**: Runs Vivado synthesis (optional)
+
+The container does **NOT** access VFIO - it only performs templating. See [Host-Container Pipeline](host-container-pipeline.md) for details.
 
 ## ✨ Key Features
 
-### 🎯 Authentic Device Cloning
-- **Real Hardware Extraction**: Extract configuration from actual PCIe devices
-- **VFIO Integration**: Direct access to device configuration space
-- **Complete Device Profiles**: Capture all device characteristics and capabilities
-
-### 🔧 Advanced Firmware Generation
-- **SystemVerilog Templates**: Professional-grade FPGA design generation
-- **Configuration Space Shadow**: Full 4KB config space in BRAM
-- **Dynamic Capabilities**: Automatic detection and implementation of PCIe capabilities
-- **Overlay RAM**: Writable register field handling
-
-### 🎛️ User-Friendly Interface
-- **Interactive TUI**: Beautiful terminal user interface
-- **CLI Integration**: Full command-line support for automation
-- **Progress Tracking**: Real-time generation progress
-- **Error Handling**: Comprehensive error reporting and recovery
-
-### 🏗️ Professional Build System
-- **Vivado Integration**: Automatic TCL script generation
-- **Template Engine**: Flexible Jinja2-based template system
-- **Build Automation**: Complete project setup and configuration
-- **Quality Assurance**: Comprehensive testing and validation
-
-## 🎯 Use Cases
-
-### 🔬 Security Research
-- Penetration testing and red team operations
-- Hardware security assessment
-- DMA attack research and defense
-
-### 🎓 Educational
-- PCIe protocol learning and experimentation
-- FPGA development education
-- Hardware security training
-
-### 🧪 Development
-- PCIe device driver development
-- Hardware debugging and analysis
-- Custom DMA solution prototyping
-
-## 🏛️ Architecture Overview
-
-The PCILeech Firmware Generator uses a sophisticated multi-layer architecture:
-
-```mermaid
-graph TD
-    A[Donor Device] --> B[VFIO Driver]
-    B --> C[Configuration Extraction]
-    C --> D[Device Analysis]
-    D --> E[Template Engine]
-    E --> F[SystemVerilog Generation]
-    F --> G[FPGA Bitstream]
-    G --> H[DMA Card]
-```
-
-### Core Components
-
-- **[Configuration Space Manager](config-space-shadow.md)**: Handles PCIe config space extraction and emulation
-- **[Template Architecture](template-architecture.md)**: Flexible template system for firmware generation
-- **[Device Capabilities](dynamic-device-capabilities.md)**: Dynamic PCIe capability detection and implementation
-- **[Build System](development.md)**: Automated FPGA project generation and building
+- **Donor Hardware Analysis**: Extract real PCIe configurations via VFIO
+- **Full 4KB Config-Space Shadow**: Complete configuration space in BRAM
+- **MSI-X Table Replication**: Exact interrupt table cloning
+- **Dynamic Device Capabilities**: Automatic PCIe capability detection
+- **Interactive TUI**: Guided workflow with real-time monitoring
+- **Containerized Builds**: Isolated, reproducible Stage 2 templating
 
 ## 📋 Requirements
 
-### System Requirements
-- **Operating System**: Linux (Ubuntu 20.04+ recommended)
-- **Python**: 3.8 or higher
-- **Memory**: 4GB RAM minimum, 8GB recommended
-- **Storage**: 2GB free space for FPGA tools
+| Requirement | Details |
+|-------------|---------|
+| **OS** | Linux only (Ubuntu 22.04+ recommended) |
+| **Python** | 3.11 or higher |
+| **Hardware** | Any PCIe device as donor |
+| **Optional** | Podman (container builds), Vivado (synthesis) |
 
-### Hardware Requirements
-- **FPGA Board**: Supported Xilinx development board
-- **Donor Device**: PCIe device for configuration extraction
-- **USB-JTAG**: For optional FPGA programming
+## 📖 Documentation
 
-### Software Dependencies
-- **Xilinx Vivado**: 2020.1 or later (for FPGA synthesis)
-- **VFIO Drivers**: For donor device access
-- **Git**: For repository management
+### Getting Started
+- **[Installation Guide](installation.md)** - Complete setup instructions
+- **[Quick Start](quick-start.md)** - Generate your first firmware
 
-## 🎯 Supported Devices
+### Build Process
+- **[Host-Container Pipeline](host-container-pipeline.md)** - Understanding the 3-stage flow
+- **[Container Builds](container-builds.md)** - Container configuration
 
-The generator supports a wide range of PCIe devices:
+### Technical Reference
+- **[Config Space Shadow](config-space-shadow.md)** - PCIe config space emulation
+- **[Template Architecture](template-architecture.md)** - Firmware generation system
+- **[Dynamic Capabilities](dynamic-device-capabilities.md)** - PCIe capability handling
 
-- **Network Cards**: Intel, Broadcom, Mellanox
-- **Storage Controllers**: NVMe, SATA, SAS
-- **Graphics Cards**: NVIDIA, AMD (basic support)
-- **Custom Hardware**: Any standard PCIe device
+### Troubleshooting
+- **[Troubleshooting Guide](troubleshooting.md)** - Common issues and solutions
+- **[Device Cloning](device-cloning.md)** - Cloning workflow details
 
-For a complete list, see [Supported Devices](supported-devices.md).
+## 🎯 Use Cases
 
-## 🛡️ Security Considerations
+- **Security Research**: PCIe/DMA security testing
+- **Education**: PCIe protocol learning, FPGA development
+- **Development**: Driver development, hardware debugging
 
-!!! warning "Responsible Use"
-    This tool is designed for legitimate security research, education, and development purposes. Users are responsible for ensuring compliance with applicable laws and regulations.
+## 🛡️ Responsible Use
 
-### Best Practices
-- Only use on systems you own or have explicit permission to test
-- Follow responsible disclosure for any vulnerabilities discovered
-- Respect intellectual property and licensing requirements
-- Use appropriate safety measures when working with hardware
-
-## 🤝 Community
-
-- **GitHub**: [Issues and Pull Requests](https://github.com/ramseymcgrath/PCILeechFWGenerator)
-- **Discord**: Join our community server
-- **Documentation**: Comprehensive guides and tutorials
+!!! warning "Legal Compliance"
+    This tool is for legitimate security research, education, and development. Users must ensure compliance with all applicable laws. Only use on systems you own or have permission to test.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/ramseymcgrath/PCILeechFWGenerator/blob/main/LICENSE.txt) file for details.
+MIT License - see [LICENSE](https://github.com/voltcyclone/PCILeechFWGenerator/blob/main/LICENSE.txt).
 
 ---
 
-**Ready to get started?** Check out our [Installation Guide](installation.md) or dive into the [Quick Start](quick-start.md) tutorial!
+**Ready?** Start with the **[Installation Guide](installation.md)** →

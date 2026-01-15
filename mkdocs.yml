@@ -93,4 +93,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.com/users/429866199833247744
 
+extra_javascript:
+  - javascripts/datadog-rum.js
+
 copyright: Copyright &copy; 2025 Ramsey McGrath

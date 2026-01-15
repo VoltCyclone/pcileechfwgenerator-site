@@ -21,17 +21,20 @@ The most common issues involve VFIO (Virtual Function I/O) configuration. Use th
 
 ```bash
 # Check VFIO setup and device compatibility
-sudo python3 pcileech.py check
+pcileech-sudo check
 
 # Check a specific device
-sudo python3 pcileech.py check --device 0000:03:00.0
+pcileech-sudo check --device 0000:03:00.0
 
 # Interactive mode with guided fixes
-sudo python3 pcileech.py check --interactive
+pcileech-sudo check --interactive
 
 # Attempt automatic fixes
-sudo python3 pcileech.py check --fix
+pcileech-sudo check --fix
 ```
+
+!!! note "Development Mode"
+    If running from the repository (not installed), use `sudo python3 pcileech.py` instead of `pcileech-sudo`.
 
 ### Common VFIO Problems
 
@@ -95,7 +98,7 @@ podman info | grep rootless
 
 ```bash
 # Manual BAR specification
-sudo python3 pcileech.py build --bdf 0000:03:00.0 \
+pcileech-sudo build --bdf 0000:03:00.0 \
   --bar0-size 0x1000 --bar1-size 0x100000
 ```
 
@@ -134,7 +137,7 @@ echo "1234 5678" | sudo tee /sys/bus/pci/drivers/vfio-pci/new_id
 
 ```bash
 # Enable verbose logging
-sudo python3 pcileech.py build --bdf 0000:03:00.0 --verbose
+pcileech-sudo build --bdf 0000:03:00.0 --verbose
 ```
 
 ## Device-Specific Issues
@@ -172,7 +175,7 @@ ls -la templates/
 2. **Validate device data**:
 ```bash
 # Use debug mode to inspect extracted data
-sudo python3 pcileech.py build --debug --dry-run
+pcileech-sudo build --debug --dry-run
 ```
 
 3. **Manual template fixes**:
