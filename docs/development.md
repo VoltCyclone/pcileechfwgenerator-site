@@ -4,7 +4,7 @@ The code needs to run on Linux but can be developed anywhere with Python version
 
 ```bash
 # Clone repository
-git clone https://github.com/ramseymcgrath/PCILeechFWGenerator
+git clone --recurse-submodules https://github.com/voltcyclone/PCILeechFWGenerator
 cd PCILeechFWGenerator
 
 # Create virtual environment

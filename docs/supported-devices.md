@@ -140,13 +140,13 @@ Use the included tools to diagnose device issues:
 
 ```bash
 # Comprehensive device analysis
-./vfio_setup_checker.py --device [device_id] --verbose
+pcileech-sudo check --device 0000:01:00.0
 
-# Interactive troubleshooting
-./vfio_setup_checker.py --interactive
+# Interactive troubleshooting with guided fixes
+pcileech-sudo check --device 0000:01:00.0 --interactive
 
-# Generate automated fix scripts
-./vfio_setup_checker.py --generate-script
+# Attempt automatic remediation where supported
+pcileech-sudo check --device 0000:01:00.0 --fix
 ```
 
 ## Best Practices

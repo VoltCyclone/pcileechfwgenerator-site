@@ -1,7 +1,7 @@
 # PCILeech Firmware Generator
 
-[![CI](https://github.com/voltcyclone/PCILeechFWGenerator/workflows/CI/badge.svg?branch=main)](https://github.com/voltcyclone/PCILeechFWGenerator/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/ramseymcgrath/PCILeechFWGenerator/graph/badge.svg?token=JVX3C1WL86)](https://codecov.io/gh/ramseymcgrath/PCILeechFWGenerator)
+[![CI](https://github.com/voltcyclone/PCILeechFWGenerator/actions/workflows/consolidated-ci.yml/badge.svg?branch=main)](https://github.com/voltcyclone/PCILeechFWGenerator/actions/workflows/consolidated-ci.yml)
+[![codecov](https://codecov.io/gh/voltcyclone/PCILeechFWGenerator/graph/badge.svg?token=JVX3C1WL86)](https://codecov.io/gh/voltcyclone/PCILeechFWGenerator)
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://github.com/voltcyclone/PCILeechFWGenerator)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE.txt)
 
