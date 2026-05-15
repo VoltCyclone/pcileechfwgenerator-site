@@ -67,6 +67,8 @@ nav:
   - Getting Started:
     - Installation: installation.md
     - Quick Start: quick-start.md
+    - Build Walkthrough: build-walkthrough.md
+    - Vivado Setup: vivado-setup.md
   - Documentation:
     - Architecture:
       - Template Architecture: template-architecture.md
@@ -74,6 +76,7 @@ nav:
       - Dynamic Device Capabilities: dynamic-device-capabilities.md
     - Usage:
       - Device Cloning: device-cloning.md
+      - Donor Card Guide: donor-cards-guide.md
       - Manual Donor Dump: manual-donor-dump.md
       - Firmware Uniqueness: firmware-uniqueness.md
       - TUI Interface: tui-readme.md
