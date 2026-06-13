@@ -7,6 +7,8 @@ edit_uri: edit/main/site/docs/
 
 theme:
   name: material
+  logo: https://resources.voltcyclone.info/logos/logo-white.png
+  favicon: https://resources.voltcyclone.info/logos/favicon.png
   palette:
     # Palette toggle for light mode
     - scheme: default
