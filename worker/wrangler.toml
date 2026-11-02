@@ -6,3 +6,11 @@ compatibility_date = "2025-08-10"
 [assets]
 directory = "../site"
 binding = "ASSETS"
+
+# Workers Logs off. Invocations and console output go to Vector through the
+# vector-tail Tail Worker instead, so deploy vector-tail before this change.
+[observability]
+enabled = false
+
+[[tail_consumers]]
+service = "vector-tail"
