@@ -78,6 +78,7 @@ nav:
       - Dynamic Device Capabilities: dynamic-device-capabilities.md
     - Usage:
       - Device Cloning: device-cloning.md
+      - "Case Study - AQC107 to ZDMA 100T": case-study-aqc107-zdma100t.md
       - Donor Card Guide: donor-cards-guide.md
       - Manual Donor Dump: manual-donor-dump.md
       - Firmware Uniqueness: firmware-uniqueness.md
