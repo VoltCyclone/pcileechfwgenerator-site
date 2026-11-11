@@ -24,13 +24,41 @@ driver's own register dump — not inferred from the profile.
 | DevCap acceptable latencies | 64 ns / 1 us |
 | Extended capabilities | AER first, at `0x100` |
 | Link width | x4 |
-| Driver bind | stock `atlantic` binds on the first cold probe |
+| Driver bind, Linux | stock `atlantic` binds on the first cold probe |
+| Driver bind, Windows | Marvell AQtion `3.1.11.0` binds, `CM_PROB_NONE` |
 
 The register dump is worth calling out: the driver exposes a fixed table of 88
 registers (`hw_atl_utils_hw_mac_regs` in `hw_atl_utils.c`), which makes
 `ethtool -d` the cheapest fidelity check available. Comparing the donor's dump
 against the clone's narrowed the differences to 13, of which 10 are hardware
 defaults that are now served at reset.
+
+## The Windows verdict
+
+The clone was handed to a Windows 11 guest through VFIO and the vendor driver
+bound it without a fault:
+
+```
+FriendlyName : Marvell AQtion 10Gbit Network Adapter
+Status       : OK
+Problem      : CM_PROB_NONE
+
+MacAddress   : 40-AE-30-DE-80-9D      <- donor MAC, read through the modelled eFuse
+DriverVersion: 3.1.11.0
+DriverProvider: Marvell
+```
+
+Media state is `Disconnected`, which is correct: there is no link partner and no
+PHY is modelled. The point proved is the one that mattered — the AQtion NDIS
+miniport accepts the endpoint, its configuration space, its BARs and its firmware
+mailbox, and the driver reads the donor's permanent MAC from the register model
+rather than falling back to a random address.
+
+Getting there needed one host-side change unrelated to the clone: the board's
+ACPI IVRS declares two small scratch ranges as identity-mapped for device IDs
+`0x0000..0x0fff`, and the kernel refuses to hand any such device to VFIO. A
+narrowed copy of the IVRS table, loaded through an initramfs ACPI override,
+excludes only the card's device ID.
 
 ## What is still open
 
